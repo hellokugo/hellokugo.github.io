@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>简析Android组件安全 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言前段时间在学习github上DroidPlgin插件的时候接触到不少专业术语，诸如预先占坑、Activity劫持和Hook等，一开始看还真是感觉雾里看花。在查阅资料的过程中发现了国人出版的《Android软件安全与逆向分析》，在理解Activity劫持的过程中引申了Android四大组件的安全。知识点不难却感觉蛮有趣，故分享之。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简析Android组件安全">
+<meta property="og:url" content="http://yoursite.com/2016/09/03/简析Android组件安全/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言前段时间在学习github上DroidPlgin插件的时候接触到不少专业术语，诸如预先占坑、Activity劫持和Hook等，一开始看还真是感觉雾里看花。在查阅资料的过程中发现了国人出版的《Android软件安全与逆向分析》，在理解Activity劫持的过程中引申了Android四大组件的安全。知识点不难却感觉蛮有趣，故分享之。">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/10484766/11139875/7c3829ba-8a0f-11e5-838c-83064d88a724.png">
+<meta property="og:updated_time" content="2016-06-14T10:04:45.716Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="简析Android组件安全">
+<meta name="twitter:description" content="前言前段时间在学习github上DroidPlgin插件的时候接触到不少专业术语，诸如预先占坑、Activity劫持和Hook等，一开始看还真是感觉雾里看花。在查阅资料的过程中发现了国人出版的《Android软件安全与逆向分析》，在理解Activity劫持的过程中引申了Android四大组件的安全。知识点不难却感觉蛮有趣，故分享之。">
+<meta name="twitter:image" content="https://cloud.githubusercontent.com/assets/10484766/11139875/7c3829ba-8a0f-11e5-838c-83064d88a724.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/">John Doe</a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/Home">博客首页</a></li>
+                        
+                            <li><a href="/works">作品展示</a></li>
+                        
+                            <li><a href="/about">留言打卡</a></li>
+                        
+                            <li><a href="/FrontEndGuide">前端导航</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=PAkNDgsKBQ4MCnxNTRJfU1E" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/luuman" title="github">github</a>
+                            
+                                <a class="fl zhihu" target="_blank" href="https://www.zhihu.com/people/luuman" title="zhihu">zhihu</a>
+                            
+                                <a class="fl weibo" target="_blank" href="http://weibo.com/lishangmou" title="weibo">weibo</a>
+                            
+                                <a class="fl google" target="_blank" href="http://i.youku.com/shangmou" title="google">google</a>
+                            
+                                <a class="fl twitter" target="_blank" href="http: //twitter.com/luuman" title="twitter">twitter</a>
+                            
+                                <a class="fl facebook" target="_blank" href="#" title="facebook">facebook</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/android/" style="font-size: 10px;">android</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://MOxFIVE.github.io/">MOxFIVE</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.vsay.cn/">DoubleV</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.ccwebsite.com/">兮兮</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.dandyweng.com/">翁天信</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.plqblog.com/views/index.php">潘利强</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.hankin.cn/">hankin</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.waydrow.com/">waydrow</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">纯海迷、爱运动、爱交友、爱旅行、喜欢接触新鲜事物、迎接新的挑战，更爱游离于错综复杂的编码与逻辑中</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">John Doe</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">John Doe</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/Home">博客首页</a></li>
+                
+                    <li><a href="/works">作品展示</a></li>
+                
+                    <li><a href="/about">留言打卡</a></li>
+                
+                    <li><a href="/FrontEndGuide">前端导航</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=PAkNDgsKBQ4MCnxNTRJfU1E" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/luuman" title="github">github</a>
+                    
+                        <a class="zhihu" target="_blank" href="https://www.zhihu.com/people/luuman" title="zhihu">zhihu</a>
+                    
+                        <a class="weibo" target="_blank" href="http://weibo.com/lishangmou" title="weibo">weibo</a>
+                    
+                        <a class="google" target="_blank" href="http://i.youku.com/shangmou" title="google">google</a>
+                    
+                        <a class="twitter" target="_blank" href="http: //twitter.com/luuman" title="twitter">twitter</a>
+                    
+                        <a class="facebook" target="_blank" href="#" title="facebook">facebook</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-简析Android组件安全" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/03/简析Android组件安全/" class="article-date">
+      <time datetime="2016-09-03T13:58:46.740Z" itemprop="datePublished">2016-09-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      简析Android组件安全
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Mobile/">Mobile</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前段时间在学习github上DroidPlgin插件的时候接触到不少专业术语，诸如预先占坑、Activity劫持和Hook等，一开始看还真是感觉雾里看花。在查阅资料的过程中发现了国人出版的《Android软件安全与逆向分析》，在理解Activity劫持的过程中引申了Android四大组件的安全。知识点不难却感觉蛮有趣，故分享之。<a id="more"></a></p>
+<h2 id="Activity"><a href="#Activity" class="headerlink" title="Activity"></a>Activity</h2><p>Android组件是用户唯一能够看见的组件，作为软件所有功能的显示载体，其安全问题是最应该受到关注的</p>
+<h3 id="权限攻击"><a href="#权限攻击" class="headerlink" title="权限攻击"></a>权限攻击</h3><p>正如Android开发文档中所说的，Android系统组件在制定Intent过滤器（intent-filter）后，默认是可以被外部程序访问的。这就很意味着很容易被其他程序进行串谋攻击，关于串谋攻击，在分享最后再做一个简单的解析。现在问题是，如何防止Activity被外部使用呢？</p>
+<p>Android所有组件声明时可以通过指定android:exported属性值为false，来设置组件不能被外部程序调用。这里的外部程序是指签名不同、用户ID不同的程序，签名相同且用户ID相同的程序在执行时共享同一个进程空间，彼此之间是没有组件访问限制的。如果希望Activity能够被特定的程序访问，就不能用android:exported属性了，可以使用android:permission属性来指定一个权限字符串，声明例子如下：</p>
+<pre><code>&lt;Activity android:name=&quot;.MyActivity&quot;
+       android:permission=&quot;com.test.permission.MyActivity&quot;&gt;
+       &lt;intent-filter&gt;
+           &lt;action android:name=&quot;com.test.action&quot;&gt;&lt;/action&gt;
+       &lt;/intent-filter&gt;
+&lt;/Activity&gt;
+</code></pre><p>这样声明的Activity在被调用时，Android系统就会检查调用者是否具有com.test.permission.MyActivity权限，如果不具备就会触发一个SecurityException安全异常。要想启动该Activity必须在AndroidManifest.xml文件中加入以下声明：</p>
+<pre><code>&lt;uses-permission android:name=&quot;com.test.permission.MyActivity&quot;&gt;
+</code></pre><h3 id="Activity劫持"><a href="#Activity劫持" class="headerlink" title="Activity劫持"></a>Activity劫持</h3><p>当用户安装了带有Activity劫持功能的恶意程序后，恶意程序会遍历系统中运行的程序，当检测到需要劫持的Activity（通常是网银或其他网络程序的等登陆界面）在前台运行时，恶意程序就会启动一个带FLAG_ACTIVITY_NEW_TASK标志的钓鱼式Activity覆盖正常的Activity，从而欺骗输入用户名或密码信息，当用户输入完信息后，程序就会将信息发送到指定的网址或邮箱，然后切换到正常的Activity中。这就是Activity劫持原理。从受影响的角度看，Activity属于用户层安全，程序员无法控制。</p>
+<p>下面做一个简单的劫持例子。实例可以对多个进程进行劫持，它在启动时启动了一个Hack服务，Hack服务创建了一个定时器，定时器每隔2秒就检测一次系统正在运行的进程，判断前台运行的进程是否匹配劫持的进程列表中，如果匹配就进行劫持：</p>
+<pre><code>private TimeTask mTask = new TimeTask(){
+
+    @Override
+    public void run(){
+         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        List&lt;RunningAppProcessInfo&gt; infos = am.getRunningAppProcesses();
+        //枚举进程
+        for(RunningAppProcessInfo psinfo:infos){
+            if(psinfo.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND){ //前台进程
+                 if(hackList.contains(psinfo.processName)){
+                     Intent intent = new Intent(getBaseContent(),HackerActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)；
+                    intent.putExtra(&quot;processname&quot;,psinfo.processName);
+                    getApplication().startActivity(intent);//启动伪造的Activity
+                }
+             }
+        }
+    }
+
+}
+</code></pre><p>Activity劫持不需要在AndroidManifest.xml中声明任何权限就可以实现，一般的防病毒软件也无法检测，手机用户更是防不胜防。不过有一种方法可以判断当前Activity是否被劫持：长按Home键不放，系统显示最近运行过的程序列表。在本例中，HackerActvity显示在最前面，很显然这个程序就有劫持Actvity的嫌疑。</p>
+<p>Unfortunately，这种检测Activity劫持的方法并不是任何时候都有效的，假如在声明Activity时，设置android:excludeFromRecents的值为true，程序在运行时就不会显示在最近运行过的程序列表中，上面的检测方法也就只能hehe了。</p>
+<h2 id="Broadcast-Receiver"><a href="#Broadcast-Receiver" class="headerlink" title="Broadcast Receiver"></a>Broadcast Receiver</h2><p>Broadcast Receiver用于处理发送和接收广播，这里分为发送安全和接收安全。接收广播涉及串谋攻击，这里先不作介绍，下面主要介绍发送广播安全。先来一段熟悉的代码:</p>
+<pre><code>Intent intent = new Intent();
+intent.setAction(&quot;com.test.broadcast&quot;);
+intent.putExtra(&quot;data&quot;,Math.random());
+sendBroadcast(intent);
+</code></pre><p>这段代码发送了一个Action为com.test.broadcast的广播。我们都知道，Android系统提供了两种广播发送方法，分别是sendBroadcast()和sendOrderedBroadcast()。sendBroadcast()用于发送无序广播，该广播能够被所有广播接受者接收，并且不能被abortBroadcast()终止，sendOrderedBroadcast()用于发送有序广播，该广播被优先级高的广播接收者有限接收，然后依次向下传递，优先级高的广播接收者可以篡改广播，或者调用abortBroadcast()终止广播。广播优先级响应的计算方法是：动态注册的广播接收者比静态广播接收者的优先级高，静态广播接收者的优先级根据设置的android:priority属性的数值来决定，数值越大，优先级越高。</p>
+<p>从上面分析可以得知，假如Hacker动态注册一个Action为com.test.broadcast的广播接收者，并且拥有最高的优先级，上述程序假如使用sendBroadcast()发送广播，Hacker的确无法通过abortBroadcast()终止，但可以优先响应该实例发送的广播；但是假如上述程序使用sendOrderedBroadcast()发送，很有可能BroadcastReceiver实例就永远无法收到自己发送的广播。</p>
+<p>当然，上述问题也是可以避免的。在发送广播时通过Intent指定具体要发送到的Android组件或类，广播就永远只能被本实例指定的类所接收，如：</p>
+<pre><code>intent,setClass(MainActivity.this,test.class);
+</code></pre><h2 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h2><p>Service组件是Android系统中的后台进程，主要的功能是在后台进行一些耗时的操作。与其他的Android组件一样，当声明Service时指定了Intent过滤器，该Service默认就可以被外部访问。可以访问的方法有：</p>
+<blockquote>
+<p>startService():启动服务，可以被用来实现串谋攻击。</p>
+<p>bindService():绑定服务，可以被用来实现串谋攻击。</p>
+<p>stopService():停止服务，对程序功能进行恶意破坏。</p>
+</blockquote>
+<p>对于恶意的stopService，它破解程序的执行环境，直接影响到程序的正常运行。要想杜绝Service组件被人恶意的启动或者停止，就需要使用Android系统的权限机制来对调用者进行控制。如果Service组件不想被程序外的其他组件访问，可以直接设置它的android:exported属性为false，如果是同一作者的多个程序共享使用该服务，则可以使用自定义的权限，这在Activity的权限攻击已经介绍过，这里就不铺开来说了。</p>
+<h2 id="Content-Provider"><a href="#Content-Provider" class="headerlink" title="Content Provider"></a>Content Provider</h2><p>Content Provider 用于程序之间数据交换。Android系统中，每个应用的数据库、文件、资源等信息都是私有的，其他程序无法访问，如果想要访问这些数据，就必须提供一种程序之间数据的访问机制，这就是Content Provider的由来。一个典型的Content Provider声明如下：</p>
+<pre><code>&lt;provider
+    android:name=&quot;com.test.providerhehe&quot;
+    android:authorities=&quot;cpm.test.heheprovider&quot;
+    android:readPermission=&quot;droider.permission.FILE_READ&quot;
+    android:writePermission=&quot;droider.permission.FILE_WRITE&quot;
+&gt;
+</code></pre><p>Content Provider提供了insert()、delete()、update()、query()等操作，其中执行query()查询操作时会执行读权限android:readPermission检查，其他的操作会执行写权限android:writePermission检查，权限检查失败时会抛出SecurityException异常。对于很多开发人员来说，在声明Content Provider 时几乎从来不使用这两个权限，这导致了串谋攻击发生的可能。部分网络软件开发商使用Content Provider来实现软件登陆、用户密码修改等敏感度极高的操作，然而声明的Content Provider却没有权限控制，这使得一些恶意软件无需任何权限就可以获取用户的敏感信息。</p>
+<h2 id="串谋权限攻击"><a href="#串谋权限攻击" class="headerlink" title="串谋权限攻击"></a>串谋权限攻击</h2><p>Android程序中资源的访问包括使用Framework提供的功能与访问其他程序的组件，前者是通过系统提供的权限机制进行控制的，后者是通过自定义权限控制的。正常情况下，没有声明特定的访问权限，就无法访问这些资源。但通过其他程序中可访问的Android组件，就有可能突破这种访问控制，从而提升程序本身的权限，这种权限提升的攻击方式在这称为串谋权限攻击。</p>
+<p><img src="https://cloud.githubusercontent.com/assets/10484766/11139875/7c3829ba-8a0f-11e5-838c-83064d88a724.png" alt="串谋权限攻击示意图"></p>
+<p>这里可以模拟一个场景，有一个下载管理程序实例DownloadManager，有一个TextView输入想要下载的文件URL，点击下载按钮即开始下载，下载下来的文件默认保存在SD卡上。当然，该实例拥有下载文件和保存SD卡的权利：</p>
+<pre><code>&lt;uses-permission androidLname=&quot;android.permission.WRITE_EXTERNAL_STORAGE/&quot;&gt;
+&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;&gt;
+</code></pre><p>下载文件的功能是通过接收下载请求广播，然后在下载广播接收者中完成的，对应的广播接收者在AndroidManifest.xml中声明：</p>
+<pre><code>&lt;receiver android:name=&quot;.DownloadReceiver&quot;&gt;
+    &lt;intent-filter&gt;
+        &lt;action android:name=&quot;com.test.download&quot;&gt;&lt;/action&gt;
+    &lt;/intent-filter&gt;
+&lt;/receiver&gt;
+</code></pre><p>DownloadReceiver响应Action为”com.test.download”的广播，然后访问Intent指定的URL地址去下载文件，相应的广播响应代码如下：</p>
+<pre><code>public void onReceive(Context context,Intent intent){
+    if(intent.getAction().equals(&quot;com.test.download&quot;)){
+        String url = intent.getExtra().getString(&quot;url&quot;);
+        String filename = intent.getExtra().getString(&quot;filename&quot;);
+        Toast.makeText(context,url,Toast.LENGTH_SHORT).show();
+        try{
+            downloadFile(url,filename);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre><p>从上面代码可以清楚地看到，下载的文件时通过url传递过来而保存的文件名则是通过filename传递。接下来就是我们的攻击程序HackerDownloader，它什么权限都没有，只有一段发送文件下载请求的代码：</p>
+<pre><code>btn.setOnClickListener(new OnClickListener(){
+    @override
+    public void onClick(){
+        Intent intent = new Intent();//创建Intent对象
+        intent.setAction(&quot;com.test.download&quot;);
+        intent.putExtra(&quot;url&quot;,&quot;http://********&quot;);//要下载文件url地址
+        String fileName = &quot;test.txt&quot;;
+        intent.putExtra(&quot;filename&quot;,fileName);
+        sendBroadcast(intent);
+    }
+});
+</code></pre><p>当HackerDownloader点击下载按钮以后，DownloadReceiver收到广播后就会开始下载相对应的文件并保存到指定目录下。至此，一次完美的串谋攻击就完成了。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/09/03/简析Android组件安全/">简析Android组件安全</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 John Doe 的个人博客">John Doe</a></p>
+        <p><span>发布时间:</span>2016年09月03日 - 21时58分</p>
+        <p><span>最后更新:</span>2016年06月14日 - 18时04分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/03/简析Android组件安全/" title="简析Android组件安全">http://yoursite.com/2016/09/03/简析Android组件安全/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/09/03/简析Android组件安全/　　作者: John Doe" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2016/09/03/简析DroidPlugin之Hook/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          简析DroidPlugin之Hook
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/09/03/Resource.arsc文件格式/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Resource.arsc文件格式</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Activity"><span class="toc-number">1.1.</span> <span class="toc-text">Activity</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#权限攻击"><span class="toc-number">1.1.1.</span> <span class="toc-text">权限攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Activity劫持"><span class="toc-number">1.1.2.</span> <span class="toc-text">Activity劫持</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Broadcast-Receiver"><span class="toc-number">1.2.</span> <span class="toc-text">Broadcast Receiver</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Service"><span class="toc-number">1.3.</span> <span class="toc-text">Service</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Content-Provider"><span class="toc-number">1.4.</span> <span class="toc-text">Content Provider</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#串谋权限攻击"><span class="toc-number">1.5.</span> <span class="toc-text">串谋权限攻击</span></a></li></ol></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2016/09/03/简析Android组件安全/" data-title="简析Android组件安全" data-url="http://yoursite.com/2016/09/03/简析Android组件安全/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"null"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = '/js/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/09/03/简析DroidPlugin之Hook/" title="上一篇: 简析DroidPlugin之Hook">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2016/09/03/Resource.arsc文件格式/" title="下一篇: Resource.arsc文件格式">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/简析DroidPlugin之Hook/">简析DroidPlugin之Hook</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/简析Android组件安全/">简析Android组件安全</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/Resource.arsc文件格式/">Resource.arsc文件格式</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2016 John Doe
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

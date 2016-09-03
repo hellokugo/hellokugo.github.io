@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Resource.arsc文件格式 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言在研究资源混淆的过程中了解到微信的资源混淆工具–AndResGuard，这个工具的强大之处不仅仅在于混淆了冗余的资源文件名称和明显减少apk的大小（这是官方说明，小弟小试了下效果不明显，有待考证），同时不涉及生成apk的编译流程，只需要输入apk和一些命令参数即可生成所需的混淆资源后的apk。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Resource.arsc文件格式">
+<meta property="og:url" content="http://yoursite.com/2016/09/03/Resource.arsc文件格式/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言在研究资源混淆的过程中了解到微信的资源混淆工具–AndResGuard，这个工具的强大之处不仅仅在于混淆了冗余的资源文件名称和明显减少apk的大小（这是官方说明，小弟小试了下效果不明显，有待考证），同时不涉及生成apk的编译流程，只需要输入apk和一些命令参数即可生成所需的混淆资源后的apk。">
+<meta property="og:image" content="http://i.imgur.com/UVU3hWW.png">
+<meta property="og:image" content="http://i.imgur.com/K76gXh0.png">
+<meta property="og:image" content="http://i.imgur.com/zWKmKf3.png">
+<meta property="og:image" content="http://i.imgur.com/pV5kgSm.png">
+<meta property="og:image" content="http://i.imgur.com/p0g4EWp.png">
+<meta property="og:image" content="http://i.imgur.com/Mhj3UOF.png">
+<meta property="og:image" content="http://i.imgur.com/ERotuBl.png">
+<meta property="og:image" content="http://i.imgur.com/VBljfg6.png">
+<meta property="og:image" content="http://i.imgur.com/4AZ99ZF.png">
+<meta property="og:image" content="http://i.imgur.com/qNT1t9t.png">
+<meta property="og:image" content="http://i.imgur.com/0TKtzCp.png">
+<meta property="og:image" content="http://i.imgur.com/Z6EDzF0.png">
+<meta property="og:updated_time" content="2016-06-14T10:06:01.349Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Resource.arsc文件格式">
+<meta name="twitter:description" content="前言在研究资源混淆的过程中了解到微信的资源混淆工具–AndResGuard，这个工具的强大之处不仅仅在于混淆了冗余的资源文件名称和明显减少apk的大小（这是官方说明，小弟小试了下效果不明显，有待考证），同时不涉及生成apk的编译流程，只需要输入apk和一些命令参数即可生成所需的混淆资源后的apk。">
+<meta name="twitter:image" content="http://i.imgur.com/UVU3hWW.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/">John Doe</a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/Home">博客首页</a></li>
+                        
+                            <li><a href="/works">作品展示</a></li>
+                        
+                            <li><a href="/about">留言打卡</a></li>
+                        
+                            <li><a href="/FrontEndGuide">前端导航</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=PAkNDgsKBQ4MCnxNTRJfU1E" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/luuman" title="github">github</a>
+                            
+                                <a class="fl zhihu" target="_blank" href="https://www.zhihu.com/people/luuman" title="zhihu">zhihu</a>
+                            
+                                <a class="fl weibo" target="_blank" href="http://weibo.com/lishangmou" title="weibo">weibo</a>
+                            
+                                <a class="fl google" target="_blank" href="http://i.youku.com/shangmou" title="google">google</a>
+                            
+                                <a class="fl twitter" target="_blank" href="http: //twitter.com/luuman" title="twitter">twitter</a>
+                            
+                                <a class="fl facebook" target="_blank" href="#" title="facebook">facebook</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/android/" style="font-size: 10px;">android</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://MOxFIVE.github.io/">MOxFIVE</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.vsay.cn/">DoubleV</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.ccwebsite.com/">兮兮</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.dandyweng.com/">翁天信</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.plqblog.com/views/index.php">潘利强</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.hankin.cn/">hankin</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.waydrow.com/">waydrow</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">纯海迷、爱运动、爱交友、爱旅行、喜欢接触新鲜事物、迎接新的挑战，更爱游离于错综复杂的编码与逻辑中</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">John Doe</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">John Doe</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/Home">博客首页</a></li>
+                
+                    <li><a href="/works">作品展示</a></li>
+                
+                    <li><a href="/about">留言打卡</a></li>
+                
+                    <li><a href="/FrontEndGuide">前端导航</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=PAkNDgsKBQ4MCnxNTRJfU1E" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/luuman" title="github">github</a>
+                    
+                        <a class="zhihu" target="_blank" href="https://www.zhihu.com/people/luuman" title="zhihu">zhihu</a>
+                    
+                        <a class="weibo" target="_blank" href="http://weibo.com/lishangmou" title="weibo">weibo</a>
+                    
+                        <a class="google" target="_blank" href="http://i.youku.com/shangmou" title="google">google</a>
+                    
+                        <a class="twitter" target="_blank" href="http: //twitter.com/luuman" title="twitter">twitter</a>
+                    
+                        <a class="facebook" target="_blank" href="#" title="facebook">facebook</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-Resource.arsc文件格式" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/03/Resource.arsc文件格式/" class="article-date">
+      <time datetime="2016-09-03T13:58:46.737Z" itemprop="datePublished">2016-09-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Resource.arsc文件格式
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Mobile/">Mobile</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在研究资源混淆的过程中了解到微信的资源混淆工具–<a href="https://github.com/shwenzhang/AndResGuard" target="_blank" rel="external">AndResGuard</a>，这个工具的强大之处不仅仅在于混淆了冗余的资源文件名称和明显减少apk的大小（这是官方说明，小弟小试了下效果不明显，有待考证），同时不涉及生成apk的编译流程，只需要输入apk和一些命令参数即可生成所需的混淆资源后的apk。<a id="more"></a><br>（美团也有一套混淆资源的方法，介绍是修改AAPT处理资源文件相关的源码，牛逼哄哄的样子：<a href="http://tech.meituan.com/mt-android-resource-obfuscation.html" target="_blank" rel="external">没错，我是链接</a>）。Anyway，对于追求完美的技术人员而言，并不能满足于一个现成的工具，了解其中原理加以修改才可以灵活运用。AndResGuard主要是通过修改resources.arsc文件来打到混淆的目的，因此，本文主要是对resources.arsc的文件格式进行阐述。<br>至于详细的实现方案和流程可参考<a href="http://mp.weixin.qq.com/s?__biz=MzAwNDY1ODY2OQ==&amp;mid=208135658&amp;idx=1&amp;sn=ac9bd6b4927e9e82f9fa14e396183a8f#rd" target="_blank" rel="external">AndResGuard原理</a></p>
+<h1 id="数据结构总体介绍"><a href="#数据结构总体介绍" class="headerlink" title="数据结构总体介绍"></a>数据结构总体介绍</h1><p>resources.arsc文件格式是由一系列的chunk构成。总体而言，可以大致分为五个chunk，分别是TYPETABLE，TYPEPACKAGE，TYPE_STRING， TYPETYPE和TYPESPEC；而这些chunk组成的结构就是资源索引表头部+字符串资源池+N个Package数据块。贴上一张传烂的图：</p>
+<p><img src="http://i.imgur.com/UVU3hWW.png" alt=""></p>
+<p>是的，看完这图我也是懵逼的。没关系，下面作一个详细点的介绍。</p>
+<h1 id="头部信息"><a href="#头部信息" class="headerlink" title="头部信息"></a>头部信息</h1><p>在介绍每个chunk之前，先说明下每个chunk均包含一个ResChunk_header的头部信息，具体的数据定义如下：</p>
+<pre><code>struct ResChunk_header
+{
+// 是当前这个chunk的类型
+uint16_t type;
+
+// 是当前这个chunk的头部大小
+uint16_t headerSize;
+
+// 是当前这个chunk的大小
+uint32_t size;
+};
+</code></pre><p>从上面的结构图可以看到，每一个chunk均是以ResChunk_header作为开头，在下面的介绍中，将会跳过。</p>
+<h1 id="资源索引表头部（TYPETABLE）"><a href="#资源索引表头部（TYPETABLE）" class="headerlink" title="资源索引表头部（TYPETABLE）"></a>资源索引表头部（TYPETABLE）</h1><p><img src="http://i.imgur.com/K76gXh0.png" alt=""></p>
+<p>可以看到，除了头部信息，还有一个package数的数据，一个apk可能包含多个资源包，这里就是指被编译的资源包个数。具体体现在有多少个TYPEPACKAGE。</p>
+<h1 id="字符串资源池（TYPE-STRING）"><a href="#字符串资源池（TYPE-STRING）" class="headerlink" title="字符串资源池（TYPE_STRING）"></a>字符串资源池（TYPE_STRING）</h1><p><img src="http://i.imgur.com/zWKmKf3.png" alt=""></p>
+<p>紧接着资源索引表头部的就是字符串资源池，这个chunk包含了所有package里定义的字符串。这个chunk的数据结构比较重要，在后面的TYPEPACKAGE里也包含着这一种chunk的数据结构，同时也是AndResGuard其中做修改数据的位置。下面简略地看下其数据结构介绍：</p>
+<h3 id="ResStringPool-header"><a href="#ResStringPool-header" class="headerlink" title="ResStringPool_header"></a>ResStringPool_header</h3><p>header：标准的Chunk头部信息结构<br><br>stringCount：字符串的个数<br><br>styleCount：字符串样式的个数<br><br>flags：字符串的属性,可取值包括0x000(UTF-16),0x001(字符串经过排序)、0X100(UTF-8)和他们的组合值<br><br>stringStart：字符串内容块相对于其头部的距离<br><br>stylesStart：字符串样式块相对于其头部的距离</p>
+<h3 id="两个Array和两个Content"><a href="#两个Array和两个Content" class="headerlink" title="两个Array和两个Content"></a>两个Array和两个Content</h3><p>紧接着ResStringPool_header就是字符串偏移数组和字符串样式偏移数组，字符串偏移数组每个元素记录着每个字符串相对于StringContent（图中数据‘字符串’）开始的索引；同样的，字符串样式偏移数组每个元素记录着每个字符串相对于StyleContent（图中数据‘style’）开始的索引。</p>
+<p>整个字符串资源区的结构示意图：</p>
+<p><img src="http://i.imgur.com/pV5kgSm.png" alt=""></p>
+<h1 id="Package数据块（TYPEPACKAGE）"><a href="#Package数据块（TYPEPACKAGE）" class="headerlink" title="Package数据块（TYPEPACKAGE）"></a>Package数据块（TYPEPACKAGE）</h1><p>在资源索引表头部中指定了package数目，所以，在这里开始，package数据块（包含TYPETYPE和TYPESPEC）是一个紧接着一个（假如有多个package）。<br><br>下面，先介绍下TYPEPACKAGE这个chunk的数据结构：</p>
+<p><img src="http://i.imgur.com/p0g4EWp.png" alt=""></p>
+<h3 id="ResTable-package"><a href="#ResTable-package" class="headerlink" title="ResTable_package"></a>ResTable_package</h3><p>header：Chunk的头部信息数据结构<br><br>id：包的ID,等于Package Id,一般用户包的值Package Id为0X7F,系统资源包的Package Id为0X01<br><br>name：包名<br><br>typeString：类型字符串资源池相对头部的偏移<br><br>lastPublicType：最后一个导出的Public类型字符串在类型字符串资源池中的索引，目前这个值设置为类型字符串资源池的元素个数。在解析的过程中没发现他的用途<br><br>keyStrings：资源项名称字符串相对头部的偏移<br><br>lastPublicKey：最后一个导出的Public资源项名称字符串在资源项名称字符串资源池中的索引，目前这个值设置为资源项名称字符串资源池的元素个数。在解析的过程中没发现他的用途</p>
+<h3 id="Type-String-Pool-amp-Key-String-Pool"><a href="#Type-String-Pool-amp-Key-String-Pool" class="headerlink" title="Type String Pool &amp; Key String Pool"></a>Type String Pool &amp; Key String Pool</h3><p>紧接着ResTable_package的是两个与字符串资源池有相同结构的字符串资源池，区别在于这里的资源池只是包含当前package的资源。</p>
+<p>Type String Pool（图中数据‘资源类型字符串池’）是一个package中用到的类型字符串，如：anim，id，layout；</p>
+<p>Key String Pool（图中数据‘资源项名称字符串池’），比如string.xml内容如下：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;resources&gt;
+&lt;string name=&quot;app_name&quot;&gt;Test&lt;/string&gt;
+&lt;string name=&quot;hello_world&quot;&gt;Hello world!&lt;/string&gt;
+&lt;string name=&quot;action_settings&quot;&gt;Settings&lt;/string&gt;
+&lt;/resources&gt;
+</code></pre><p>那么这个pool就收集了app_name，hello_world   action_settings 这3个字符串。这个pool是AndResGuard作修改的一处位置。</p>
+<p>整个Package数据块区的结构示意图：</p>
+<p><img src="http://i.imgur.com/Mhj3UOF.png" alt=""></p>
+<p>可以看到，在紧接着Type String Pool和Key String Pool后是剩下的两个chunk，在这里Type Specification Trunk和Type Info Trunk分别对应 TYPESPEC和TYPETYPE，下面作详细介绍。</p>
+<h1 id="类型规范数据块（TYPESPEC）-amp-资源类型项数据块（TYPETYPE）"><a href="#类型规范数据块（TYPESPEC）-amp-资源类型项数据块（TYPETYPE）" class="headerlink" title="类型规范数据块（TYPESPEC） &amp; 资源类型项数据块（TYPETYPE）"></a>类型规范数据块（TYPESPEC） &amp; 资源类型项数据块（TYPETYPE）</h1><p>先来看一段TYPESPEC的介绍：</p>
+<pre><code>类型规范数据块用来描述资源项的配置差异性。通过这个差异性描述，我们就可以知道每一个资源项的配置状况。知道了一个资源项的配置状况之后，Android资源管理框架在检测到设备的配置信息发生变化之后，就可以知道是否需要重新加载该资源项。类型规范数据块是按照类型来组织的，也就是说，每一种类型都对应有一个类型规范数据块。
+</code></pre><p><img src="http://i.imgur.com/ERotuBl.png" alt=""></p>
+<p>国际惯例，大概了解下其数据结构：</p>
+<pre><code>header：Chunk的头部信息结构
+id：标识资源的Type ID,Type ID是指资源的类型ID。资源的类型有animator、anim、color、drawable、layout、menu、raw、string和xml等等若干种，每一种都会被赋予一个ID。
+res0：保留,始终为0
+res1：保留,始终为0
+entryCount：等于本类型的资源项个数,指名称相同的资源项的个数。
+</code></pre><p>再来一段TYPETYPE的介绍：</p>
+<pre><code>类型资源项数据块用来描述资源项的具体信息, 这样我们就可以知道每一个资源项的名称、值和配置等信息。 类型资源项数据同样是按照类型和配置来组织的,也就是说,一个具有n个配置的类型一共对应有n个类型资源项数据块。
+</code></pre><p><img src="http://i.imgur.com/VBljfg6.png" alt=""></p>
+<p>TYPETYPE的数据结构：</p>
+<pre><code>header：Chunk的头部信息结构
+id：标识资源的Type ID
+res0：保留,始终为0
+res1：保留,始终为0
+entryCount：等于本类型的资源项个数,指名称相同的资源项的个数。
+entriesStart：等于资源项数据块相对头部的偏移值。
+resConfig：指向一个ResTable_config,用来描述配置信息,地区,语言,分辨率等
+</code></pre><p>注意下的是，这里两个chunk的id均是标识资源的id，这里是指类似drawable和anim等类型，其他字段在这里不做介绍，结合AndResGuard重点介绍的是紧跟TYPETYPE后的ResTable_entry数组，这个数组是指具体每个元素的配置解释，而这里也是AndResGuard需要做修改的其中两个地方。</p>
+<p>说实话，看到两段描述的时候有点混乱，查阅资料和说明例子后以为理解了，结合AndResGuard源码尝试去理解更换两个chunk数据，又陷入了无限的懵逼状态。归根结底，是不能理解类型和配置是如何进行映射。毛爷爷说过，实践是检验真理的唯一标准，于是乎，小弟写了个简单的helloworld的demo，主要截上资源配置：</p>
+<p><img src="http://i.imgur.com/4AZ99ZF.png" alt=""></p>
+<p>这里要留意两点，一是类型drawable有三种配置，分别是drawable-hdpi，drawable-mdpi和drawable-xhdpi，这三个配置里均有ic_launcher.png；第二点是，在drawable-mdpi文件下有test.png。</p>
+<p>然后就开始解析里面的resources.arsc，主要结果截图如下：</p>
+<p>图一：</p>
+<p><img src="http://i.imgur.com/qNT1t9t.png" alt=""></p>
+<p>图二：</p>
+<p><img src="http://i.imgur.com/0TKtzCp.png" alt=""></p>
+<p>关注图一，主要是说明两个TYPESPEC，以parse restype spec chunk…开始解析，第一块的type_name:attr，没有元素，所以<br>entryCount=0；第二块的type_name:drawable，留意下entryCount=2，有两个元素，所以对应有两个TYPETYPE，这里是以parse restype info chunk…开始解析，这个也很好理解，因为demo是有两张图片，分别是ic_launcher和test，对应的是drawable-mdpi文件下的文件描述；<br></p>
+<p>这时候关注下图二，这个是另外两个TYPETYPE chunk的截图，自然而然想到的是另外两个drawable的文件资源描述，图中每个圈是每一个entry，entry中的index是对应package chunk中资源项名称字符串池的字符串偏移值，解析出来的字符串时str:ic_launcher，value中的data其实是在 字符串资源池（TYPE_STRING）解析出来的数据，在内部也是通过一个偏移值去获取该值；图二还有一个细节，也是困扰小弟几天的问题，就是即使在drawable-mdpi文件下没有test.png，在其数据结构的trunk中的entryCount=2，而在具体的entry中datatype=TYPR_NULL,这就很好地理解了AndResGuard中替换资源名字的方法，保持每个resId的唯一性，同时也可以针对具体的配置进行文件名替换。<br></p>
+<p>至此，最后的两个chunk也介绍完毕。归结而言，就是每个资源类型对应一个TYPESPEC，而紧跟每一种类型的就是其类型所包含的配置，每个配置就是对应一个TYPETYPE。</p>
+<h1 id="关注AndResGuard"><a href="#关注AndResGuard" class="headerlink" title="关注AndResGuard"></a>关注AndResGuard</h1><p>大概了解了resources.arsc结构，去了解AndResGuard混淆资源的方案就应该更为清晰了，简单看下替换方案：</p>
+<p><img src="http://i.imgur.com/Z6EDzF0.png" alt=""></p>
+<p>首先，我们其实修改的是资源文件名(a.png)和资源文件的路径名（r\a\a.png），这样对应修改的就是TYPEPACKAGE和TYPE_STRING（对应方案1和3），而最后我们介绍的TYPETYPE和TYPESPEC是分别有TYPEPACKAGE和TYPE_STRING的字符串偏移值，这样对应也需要做修改（对应方案4），当然，缩短了文件命名必然会对整个table的大小造成改变，所以要重新计算并写入新的resources.arsc（对应方案5），结合源码分析，可能会有更深的理解。<br></p>
+<p>由于本人没有对resources.arsc做整体的透彻理解，只是在AndResGuard项目基础上去选择性关注要修改的点，如果在分析过程中有出现纰漏或者错误的地方，希望指出。</p>
+<p>参考资料：<br><a href="http://blog.csdn.net/jiangwei0910410003/article/details/50628894" target="_blank" rel="external">http://blog.csdn.net/jiangwei0910410003/article/details/50628894</a><br><a href="http://www.cnblogs.com/njxxdx/p/4189971.html" target="_blank" rel="external">http://www.cnblogs.com/njxxdx/p/4189971.html</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/09/03/Resource.arsc文件格式/">Resource.arsc文件格式</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 John Doe 的个人博客">John Doe</a></p>
+        <p><span>发布时间:</span>2016年09月03日 - 21时58分</p>
+        <p><span>最后更新:</span>2016年06月14日 - 18时06分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/03/Resource.arsc文件格式/" title="Resource.arsc文件格式">http://yoursite.com/2016/09/03/Resource.arsc文件格式/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/09/03/Resource.arsc文件格式/　　作者: John Doe" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2016/09/03/简析Android组件安全/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          简析Android组件安全
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据结构总体介绍"><span class="toc-number">2.</span> <span class="toc-text">数据结构总体介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#头部信息"><span class="toc-number">3.</span> <span class="toc-text">头部信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#资源索引表头部（TYPETABLE）"><span class="toc-number">4.</span> <span class="toc-text">资源索引表头部（TYPETABLE）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字符串资源池（TYPE-STRING）"><span class="toc-number">5.</span> <span class="toc-text">字符串资源池（TYPE_STRING）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ResStringPool-header"><span class="toc-number">5.0.1.</span> <span class="toc-text">ResStringPool_header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两个Array和两个Content"><span class="toc-number">5.0.2.</span> <span class="toc-text">两个Array和两个Content</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Package数据块（TYPEPACKAGE）"><span class="toc-number">6.</span> <span class="toc-text">Package数据块（TYPEPACKAGE）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ResTable-package"><span class="toc-number">6.0.1.</span> <span class="toc-text">ResTable_package</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Type-String-Pool-amp-Key-String-Pool"><span class="toc-number">6.0.2.</span> <span class="toc-text">Type String Pool & Key String Pool</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#类型规范数据块（TYPESPEC）-amp-资源类型项数据块（TYPETYPE）"><span class="toc-number">7.</span> <span class="toc-text">类型规范数据块（TYPESPEC） & 资源类型项数据块（TYPETYPE）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#关注AndResGuard"><span class="toc-number">8.</span> <span class="toc-text">关注AndResGuard</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2016/09/03/Resource.arsc文件格式/" data-title="Resource.arsc文件格式" data-url="http://yoursite.com/2016/09/03/Resource.arsc文件格式/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"null"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = '/js/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/09/03/简析Android组件安全/" title="上一篇: 简析Android组件安全">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/简析DroidPlugin之Hook/">简析DroidPlugin之Hook</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/简析Android组件安全/">简析Android组件安全</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/Resource.arsc文件格式/">Resource.arsc文件格式</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2016 John Doe
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

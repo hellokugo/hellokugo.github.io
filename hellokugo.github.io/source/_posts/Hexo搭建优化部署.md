@@ -1,4 +1,4 @@
-title: Resource.arsc文件格式
+title: Hexo搭建优化部署
 date: 2016/9/4 00：17
 
 categories:

@@ -128,7 +128,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/android/" style="font-size: 10px;">android</a>
+                        <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/other/" style="font-size: 10px;">other</a>
                     </div>
                 </section>
                 
@@ -209,39 +209,42 @@
       <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/03/Hexo搭建优化部署/">Resource.arsc文件格式</a>
+    </h1>
+  
+
+      </header>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>作为一名专业的技术码农，经验积累和技术分享是一项必不可少的软技能。俗话说，好记性不如烂笔头，在平时工作中遇到的各种奇葩问题和学习感悟用文档记录是个很好的习惯，同时也可以用做分享，让别人或者自己少走弯路。目前网上各种技术博客可谓百花齐放，诸如CSDN、51blog和不少公司定制的分享博客等，当然也有不少公司内部分享的.md记录文档。当然了，如果你是一名“异类”的程序猿，不满足于现有的博客框架，不妨考虑下本文介绍的Github pages+Hexo+Nodejs搭建个人blog。</p>
-<h1 id="概要说明"><a href="#概要说明" class="headerlink" title="概要说明"></a>概要说明</h1><p>网上对于这种博客的搭建应该是有相当多的介绍了，<a href="http://cstsinghua.github.io/2016/06/16/Github%20pages+Hexo+Nodejs%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BAblog/#建站&quot;" target="_blank" rel="external">简单的搭建</a>或者换一个皮肤相信也难不到大家。但是大家在使用的过程中应该会发现，框架的搭建是依赖于当前的电脑，假如电脑要重装或者直接挂了要换一台新的，这样原本的记录岂不是全没了？我一直都相信，高手在人间，发现这个问题的早有人在，而解决的办法总比问题多，本文的介绍就是参考网上的配置做法做点补充：<a href="http://crazymilk.github.io/2015/12/28/GitHub-Pages-Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/#more" target="_blank" rel="external">参考文章</a></p>
-<h1 id="搭建流程"><a href="#搭建流程" class="headerlink" title="搭建流程"></a>搭建流程</h1><p>参考上面提供文章链接中的第四点 <strong>优化部署与管理</strong>，笔者在配置过程出现了几个问题导致一直配置失败，在这里分享下希望有同样问题的读者可以参考，过程大同小异：</p>
-<ol>
-<li>创建仓库，CrazyMilk.github.io；<br></li>
-<li>创建两个分支：master 与 hexo；<br></li>
-<li>设置hexo为默认分支（因为我们只需要手动管理这个分支上的Hexo网站文件）；<br></li>
-<li>使用git clone git@github.com:hellokugo/hellokugo.github.io.git拷贝仓库；<br></li>
-<li><p>hellokugo.github.io文件夹下通过Git bash依次执行npm install hexo、hexo init、npm install 和 npm install hexo-deployer-git（此时当前分支应显示为hexo）;<br></p>
-<p> <strong>注意1：笔者在这里踩了坑，在执行hexo init的时候会把第二步clone下来的文件.git给删掉，导致在下面做代码提交步骤时一直报找不到.git文件错误，所以，在执行第五步或者执行hexo init前把.git文件放到上级目录（或者在执行完第五步再把.git文件放回来，这个没有做测试），这样就不会出现这样的错误了。这里可以用git branch来检查下当前分支会否为hexo</strong><br></p>
-</li>
-<li><p>修改_config.yml中的deploy参数，分支应为master（可用git branch命令来检查）；</p>
-</li>
-<li><p>依次执行git add .、git commit -m “…”、git push origin hexo提交网站相关的文件；</p>
-<p> <strong>注意2：这里最后一步git push origin hexo，对于还没习惯git工具的读者可能会直接按照这个命令输入，然后就抛出origin未定义的错误，这个如果有点git工具使用经验的读者来说，是应该在这命令前先定义origin，即git remote add origin git@github.com:hellokugo/hellokugo.github.io.git（这里是你的仓库github地址）</strong><br></p>
-</li>
-<li><p>执行hexo generate -d生成网站并部署到GitHub上。</p>
-<p> <strong>注意3：有些读者可能走到这一步时就抛出FATE Deploy failed: git，这个问题在于执行第五步的最后一句命令npm install hexo-deployer-git没有把相关文件记录下来导致出错，不过这可能不是每个人都会出现，如果出现了，再执行npm install hexo-deployer-git –save,，然后再部署即可。</strong><br></p>
-</li>
-</ol>
-<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>其实上述步骤完全可以写一个简单的python脚本实现（有需要可以提供一个参数输入，用于填写提交日志），这里就不累赘了。最后，感谢参考文章中笔者提供这种思路去巧妙解决电脑各种丢失数据而导致的问题，真心想说一句，站在巨人的肩上，技术路上不孤单。</p>
-
+              <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>作为一名专业的技术码农，经验积累和技术分享是一项必不可少的软技能。俗话说，好记性不如烂笔头，在平时工作中遇到的各种奇葩问题和学习感悟用文档记录是个很好的习惯，同时也可以用做分享，让别人或者自己少走弯路。目前网上各种技术博客可谓百花齐放，诸如CSDN、51blog和不少公司定制的分享博客等，当然也有不少公司内部分享的.md记录文档。当然了，如果<br>
+          
       
     </div>
     
     <div class="article-info article-info-index">
       
       
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Others/">Others</a>
+    </div>
+
 
       
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/other/">other</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/09/03/Hexo搭建优化部署/#more">More >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>

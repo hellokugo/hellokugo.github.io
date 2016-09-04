@@ -21,7 +21,7 @@ tags:
 
 参考上面提供文章链接中的第四点 **优化部署与管理**，笔者在配置过程出现了几个问题导致一直配置失败，在这里分享下希望有同样问题的读者可以参考，过程大同小异：
 
-1. 创建仓库，CrazyMilk.github.io；<br>
+1. 创建仓库，hellokugo.github.io.git；<br>
 2. 创建两个分支：master 与 hexo；<br>
 3. 设置hexo为默认分支（因为我们只需要手动管理这个分支上的Hexo网站文件）；<br>
 4. 使用git clone git@github.com:hellokugo/hellokugo.github.io.git拷贝仓库；<br>

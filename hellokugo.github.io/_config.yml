@@ -67,7 +67,7 @@ theme: spfk
 
 sitemap:
   path: sitemap.xml
-baidusitmap:
+baidusitemap:
   path:baidusitemap.xml
     
 

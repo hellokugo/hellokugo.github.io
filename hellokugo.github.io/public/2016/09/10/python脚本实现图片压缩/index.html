@@ -3,18 +3,28 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hexo搭建优化部署 | hellokugo</title>
+  <title>python脚本实现图片压缩 | hellokugo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言作为一名专业的技术码农，经验积累和技术分享是一项必不可少的软技能。俗话说，好记性不如烂笔头，在平时工作中遇到的各种奇葩问题和学习感悟用文档记录是个很好的习惯，同时也可以用做分享，让别人或者自己少走弯路。目前网上各种技术博客可谓百花齐放，诸如CSDN、51blog和不少公司定制的分享博客等，当然也有不少公司内部分享的.md记录文档。当然了，如果">
+  <meta name="description" content="##前言
+在我们android开发过程中，无可避免地都需要对图片资源进行压缩，尽可能减少最终apk包的大小。目前压缩的方法可谓是五花八门，笔者这里主要介绍利用python脚本进行图片的批量压缩。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo搭建优化部署">
-<meta property="og:url" content="https://hellokugo.github.io/2016/09/03/Hexo搭建优化部署/index.html">
+<meta property="og:title" content="python脚本实现图片压缩">
+<meta property="og:url" content="https://hellokugo.github.io/2016/09/10/python脚本实现图片压缩/index.html">
 <meta property="og:site_name" content="hellokugo">
-<meta property="og:description" content="前言作为一名专业的技术码农，经验积累和技术分享是一项必不可少的软技能。俗话说，好记性不如烂笔头，在平时工作中遇到的各种奇葩问题和学习感悟用文档记录是个很好的习惯，同时也可以用做分享，让别人或者自己少走弯路。目前网上各种技术博客可谓百花齐放，诸如CSDN、51blog和不少公司定制的分享博客等，当然也有不少公司内部分享的.md记录文档。当然了，如果">
-<meta property="og:updated_time" content="2016-09-10T04:52:16.667Z">
+<meta property="og:description" content="##前言
+在我们android开发过程中，无可避免地都需要对图片资源进行压缩，尽可能减少最终apk包的大小。目前压缩的方法可谓是五花八门，笔者这里主要介绍利用python脚本进行图片的批量压缩。">
+<meta property="og:image" content="http://i.imgur.com/Kw8u1l6.png">
+<meta property="og:image" content="http://i.imgur.com/wSSlLG0.png">
+<meta property="og:image" content="http://i.imgur.com/SQeVvT0.png">
+<meta property="og:image" content="http://i.imgur.com/niSwhMV.png">
+<meta property="og:image" content="http://i.imgur.com/AZyrNsD.png">
+<meta property="og:image" content="http://i.imgur.com/sJppxxf.png">
+<meta property="og:updated_time" content="2016-09-10T08:00:27.012Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo搭建优化部署">
-<meta name="twitter:description" content="前言作为一名专业的技术码农，经验积累和技术分享是一项必不可少的软技能。俗话说，好记性不如烂笔头，在平时工作中遇到的各种奇葩问题和学习感悟用文档记录是个很好的习惯，同时也可以用做分享，让别人或者自己少走弯路。目前网上各种技术博客可谓百花齐放，诸如CSDN、51blog和不少公司定制的分享博客等，当然也有不少公司内部分享的.md记录文档。当然了，如果">
+<meta name="twitter:title" content="python脚本实现图片压缩">
+<meta name="twitter:description" content="##前言
+在我们android开发过程中，无可避免地都需要对图片资源进行压缩，尽可能减少最终apk包的大小。目前压缩的方法可谓是五花八门，笔者这里主要介绍利用python脚本进行图片的批量压缩。">
+<meta name="twitter:image" content="http://i.imgur.com/Kw8u1l6.png">
   
     <link rel="alternative" href="/atom.xml" title="hellokugo" type="application/atom+xml">
   
@@ -195,11 +205,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-Hexo搭建优化部署" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-python脚本实现图片压缩" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/09/03/Hexo搭建优化部署/" class="article-date">
-      <time datetime="2016-09-03T14:56:45.289Z" itemprop="datePublished">2016-09-03</time>
+      <a href="/2016/09/10/python脚本实现图片压缩/" class="article-date">
+      <time datetime="2016-09-10T05:30:22.150Z" itemprop="datePublished">2016-09-10</time>
 </a>
     </div>
   
@@ -212,7 +222,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Hexo搭建优化部署
+      python脚本实现图片压缩
     </h1>
   
 
@@ -221,13 +231,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Others/">Others</a>
+    <a class="article-category-link" href="/categories/Python/">Python</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/other/">other</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -237,27 +247,61 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>作为一名专业的技术码农，经验积累和技术分享是一项必不可少的软技能。俗话说，好记性不如烂笔头，在平时工作中遇到的各种奇葩问题和学习感悟用文档记录是个很好的习惯，同时也可以用做分享，让别人或者自己少走弯路。目前网上各种技术博客可谓百花齐放，诸如CSDN、51blog和不少公司定制的分享博客等，当然也有不少公司内部分享的.md记录文档。当然了，如果<br><a id="more"></a>你是一名“异类”的程序猿，不满足于现有的博客框架，不妨考虑下本文介绍的Github pages+Hexo+Nodejs搭建个人blog。</p>
-<h1 id="概要说明"><a href="#概要说明" class="headerlink" title="概要说明"></a>概要说明</h1><p>网上对于这种博客的搭建应该是有相当多的介绍了，<a href="http://cstsinghua.github.io/2016/06/16/Github%20pages+Hexo+Nodejs%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BAblog/#建站&quot;" target="_blank" rel="external">简单的搭建</a>或者换一个皮肤相信也难不到大家。但是大家在使用的过程中应该会发现，框架的搭建是依赖于当前的电脑，假如电脑要重装或者直接挂了要换一台新的，这样原本的记录岂不是全没了？我一直都相信，高手在人间，发现这个问题的早有人在，而解决的办法总比问题多，本文的介绍就是参考网上的配置做法做点补充：<a href="http://crazymilk.github.io/2015/12/28/GitHub-Pages-Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/#more" target="_blank" rel="external">参考文章</a></p>
-<h1 id="搭建流程"><a href="#搭建流程" class="headerlink" title="搭建流程"></a>搭建流程</h1><p>参考上面提供文章链接中的第四点 <strong>优化部署与管理</strong>，笔者在配置过程出现了几个问题导致一直配置失败，在这里分享下希望有同样问题的读者可以参考，过程大同小异：</p>
-<ol>
-<li>创建仓库，hellokugo.github.io.git；<br></li>
-<li>创建两个分支：master 与 hexo；<br></li>
-<li>设置hexo为默认分支（因为我们只需要手动管理这个分支上的Hexo网站文件）；<br></li>
-<li>使用git clone git@github.com:hellokugo/hellokugo.github.io.git拷贝仓库；<br></li>
-<li><p>hellokugo.github.io文件夹下通过Git bash依次执行npm install hexo、hexo init、npm install 和 npm install hexo-deployer-git（此时当前分支应显示为hexo）;<br></p>
-<p> <strong>注意1：笔者在这里踩了坑，在执行hexo init的时候会把第二步clone下来的文件.git给删掉，导致在下面做代码提交步骤时一直报找不到.git文件错误，所以，在执行第五步或者执行hexo init前把.git文件放到上级目录（或者在执行完第五步再把.git文件放回来，这个没有做测试），这样就不会出现这样的错误了。这里可以用git branch来检查下当前分支会否为hexo</strong><br></p>
-</li>
-<li><p>修改_config.yml中的deploy参数，分支应为master（可用git branch命令来检查）；</p>
-</li>
-<li><p>依次执行git add .、git commit -m “…”、git push origin hexo提交网站相关的文件；</p>
-<p> <strong>注意2：这里最后一步git push origin hexo，对于还没习惯git工具的读者可能会直接按照这个命令输入，然后就抛出origin未定义的错误，这个如果有点git工具使用经验的读者来说，是应该在这命令前先定义origin，即git remote add origin git@github.com:hellokugo/hellokugo.github.io.git（这里是你的仓库github地址）</strong><br></p>
-</li>
-<li><p>执行hexo generate -d生成网站并部署到GitHub上。</p>
-<p> <strong>注意3：有些读者可能走到这一步时就抛出FATE Deploy failed: git，这个问题在于执行第五步的最后一句命令npm install hexo-deployer-git没有把相关文件记录下来导致出错，不过这可能不是每个人都会出现，如果出现了，再执行npm install hexo-deployer-git –save,，然后再部署即可。</strong><br></p>
-</li>
-</ol>
-<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>其实上述步骤完全可以写一个简单的python脚本实现（有需要可以提供一个参数输入，用于填写提交日志），这里就不累赘了。最后，感谢参考文章中笔者提供这种思路去巧妙解决电脑各种丢失数据而导致的问题，真心想说一句，站在巨人的肩上，技术路上不孤单。</p>
+        <p>##前言</p>
+<p>在我们android开发过程中，无可避免地都需要对图片资源进行压缩，尽可能减少最终apk包的大小。目前压缩的方法可谓是五花八门，笔者这里主要介绍利用python脚本进行图片的批量压缩。<a id="more"></a></p>
+<p>##Tinypng</p>
+<p>打开它的官网 <a href="https://tinypng.com/" target="_blank" rel="external">https://tinypng.com</a> 发现其提供线上上传图片进行压缩，看到例子介绍压缩率还是蛮可观的，而且压缩前后对图片影响不大。我们点进去<strong><em>DEVELOPER API</em></strong>,可以看到其支持不少编程语言进行压缩：</p>
+<p><img src="http://i.imgur.com/Kw8u1l6.png" alt=""></p>
+<p>为了和下面介绍的方法统一，这里介绍python语言的使用，笔者用的是windows系统，下面介绍请参考windows配置。</p>
+<p>1.首先，需要申请一个API key配置：</p>
+<p><img src="http://i.imgur.com/wSSlLG0.png" alt=""><br>2.接着安装tinify的python插件，在cmd命令行输入：</p>
+<pre><code>pip install --upgrade tinify
+</code></pre><p>3.现在就可以开始编写python脚本了，贴上核心代码： </p>
+<pre><code>import tinify
+....
+tinify_keys = &quot;&quot;YOUR_API_KEY&quot;&quot;
+...
+source = tinify.from_file(&quot;unoptimized.jpg&quot;)
+source.to_file(&quot;optimized.jpg&quot;)
+</code></pre><p>Tinypng还有很多对图片进行处理的接口，这里主要是介绍压缩就没有展开细说。其实利用Tinypng对图片进行压缩还是蛮简单的，但是蛋疼的是申请的API key每个月只支持500张的免费压缩：</p>
+<p><img src="http://i.imgur.com/SQeVvT0.png" alt=""></p>
+<p>这对于我们开发人员来说是远远不够的（当然，你可以申请多个API key或者直接付钱），所以就得继续寻找看有没有更好的替代方案。</p>
+<p>##pngquant</p>
+<p>pngquant是国外一个有损的PNG压缩库，介绍称结合vector quantization算法生成高质量的色彩范围，用脚本同样可以处理批量图片压缩。其支持命令行和源码库形式使用，这里介绍的是使用命令行方式：</p>
+<p>1.首先，在 <a href="https://pngquant.org/" target="_blank" rel="external">pngquant官网</a>  下载适合windows系统的包：</p>
+<p><img src="http://i.imgur.com/niSwhMV.png" alt=""></p>
+<p>下载下来的包含两个预处理的bat命令和pngquant.exe：</p>
+<p><img src="http://i.imgur.com/AZyrNsD.png" alt=""></p>
+<p>因为我们自己编写python批处理脚本，所以这里只需要用到压缩的pngquant.exe工具；</p>
+<p>2.现在就可以开始编写python脚本了，贴上核心代码：</p>
+<pre><code>import subprocess
+#需修改为你自己本地pnguant.exe路径
+PNGQUANT_PATH = r&apos;Your path\pngquant.exe&apos;
+...
+cmd_command = &apos;&quot;{0}&quot; 256 -s1 --force --quality=50-50 &quot;{1}&quot; -o &quot;{2}&quot;&apos;.format(PNGQUANT_PATH, &quot;unoptimized.png&quot;, &quot;optimized.png&quot;)
+#执行命令
+p = subprocess.Popen(cmd_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+retval = p.wait()
+</code></pre><p>以上就是对pngquant压缩代码的介绍，经测试发现，这种压缩方式有的情况下会出现压缩后的大小比压缩前还要大（压缩率为负数），笔者尝试调整–quality参数从20-100均不能解决问题（当然，并不能为了大小而影响图片质量，笔者认为参数quality在50已经是设置的最低值，这里只是做测试），暂时没找到有效的参数设置去解决，如果读者找到原因，希望可以分享下方法。</p>
+<p>##Pillow (PIL Fork)</p>
+<p>Pillow是python内置的PIL（Python Imaging Library）的一个分支，当初使用这个库主要是因为其支持python 3.0+版本，主要是对图片进行等比例缩放。后面做了测试发现，Pillow支持对png图片的压缩还是蛮可观的（比Tinypng逊色点），下面就简单介绍下其使用：<a href="https://pillow.readthedocs.io/en/3.3.x/" target="_blank" rel="external">Pillow官网</a> </p>
+<p>1.安装Pillow的python插件：</p>
+<p><strong><em>注意，如果你电脑已经安装过python的 PIL库，请先卸掉再安装Pillow</em></strong></p>
+<p><img src="http://i.imgur.com/sJppxxf.png" alt=""></p>
+<pre><code>pip install Pillow
+</code></pre><p>或者<br></p>
+<pre><code>easy_install Pillow
+</code></pre><p>2.现在就可以开始编写python脚本了，贴上核心代码：</p>
+<pre><code>from PIL import Image
+...
+im = Image.open(&quot;unoptimized.png&quot;)
+if file.endswith(&quot;.png&quot;):
+    im = im.convert(&apos;P&apos;)
+im.save(&quot;optimized.png&quot;,optimize=True)
+</code></pre><p>可以看到，上面做了一个图片是否为png的判断，主要是Pillow对png图片压缩能做到更好的处理。</p>
+<p>##总结：</p>
+<p>针对以上三种的图片压缩工具，如果你有足够多的API key或者图片只在最终发包使用前才压缩，优先考虑Tinypng，因为这个是压缩效果最好；而次之选择考虑Pillow，其较为接近Tinypng的压缩效果和出现压缩率为负数的图片几率数少；鉴于笔者没有找到有效解决pngquant出现压缩率为负数较多情况下的出现，所以笔者尽可能会减少使用。<strong><em>特别注意的是，不要对同一张图片进行多次压缩，这样必然会影响图片的质量，得不偿失。</em></strong></p>
+<p>源码参考：<a href="https://github.com/hellokugo/imgCompress" target="_blank" rel="external">https://github.com/hellokugo/imgCompress</a> </p>
 
       
     </div>
@@ -266,13 +310,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/09/03/Hexo搭建优化部署/">Hexo搭建优化部署</a></p>
+        <p><span>本文标题:</span><a href="/2016/09/10/python脚本实现图片压缩/">python脚本实现图片压缩</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 hellokugo 的个人博客">hellokugo</a></p>
-        <p><span>发布时间:</span>2016年09月03日 - 22时56分</p>
-        <p><span>最后更新:</span>2016年09月10日 - 12时52分</p>
+        <p><span>发布时间:</span>2016年09月10日 - 13时30分</p>
+        <p><span>最后更新:</span>2016年09月10日 - 16时00分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/09/03/Hexo搭建优化部署/" title="Hexo搭建优化部署">https://hellokugo.github.io/2016/09/03/Hexo搭建优化部署/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://hellokugo.github.io/2016/09/03/Hexo搭建优化部署/　　作者: hellokugo" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/10/python脚本实现图片压缩/" title="python脚本实现图片压缩">https://hellokugo.github.io/2016/09/10/python脚本实现图片压缩/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://hellokugo.github.io/2016/09/10/python脚本实现图片压缩/　　作者: hellokugo" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -285,18 +329,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2016/09/10/优化动态加载方案/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          优化动态加载方案
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/09/03/简析DroidPlugin之Hook/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">简析DroidPlugin之Hook</div>
+    <a href="/2016/09/10/优化动态加载方案/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">优化动态加载方案</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -307,7 +342,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#概要说明"><span class="toc-number">2.</span> <span class="toc-text">概要说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#搭建流程"><span class="toc-number">3.</span> <span class="toc-text">搭建流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最后"><span class="toc-number">4.</span> <span class="toc-text">最后</span></a></li></ol>
+    
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -343,7 +378,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/09/03/Hexo搭建优化部署/" data-title="Hexo搭建优化部署" data-url="https://hellokugo.github.io/2016/09/03/Hexo搭建优化部署/"></div>
+    <div class="ds-thread" data-thread-key="2016/09/10/python脚本实现图片压缩/" data-title="python脚本实现图片压缩" data-url="https://hellokugo.github.io/2016/09/10/python脚本实现图片压缩/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -366,13 +401,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/09/10/优化动态加载方案/" title="上一篇: 优化动态加载方案">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2016/09/03/简析DroidPlugin之Hook/" title="下一篇: 简析DroidPlugin之Hook">
+            <a href="/2016/09/10/优化动态加载方案/" title="下一篇: 优化动态加载方案">
                 <i class="fa fa-angle-right"></i>
             </a>
         

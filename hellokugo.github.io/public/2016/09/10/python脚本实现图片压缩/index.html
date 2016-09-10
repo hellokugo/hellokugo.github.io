@@ -5,13 +5,13 @@
   
   <title>python脚本实现图片压缩 | hellokugo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="##前言
+  <meta name="description" content="#前言
 在我们android开发过程中，无可避免地都需要对图片资源进行压缩，尽可能减少最终apk包的大小。目前压缩的方法可谓是五花八门，笔者这里主要介绍利用python脚本进行图片的批量压缩。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python脚本实现图片压缩">
 <meta property="og:url" content="https://hellokugo.github.io/2016/09/10/python脚本实现图片压缩/index.html">
 <meta property="og:site_name" content="hellokugo">
-<meta property="og:description" content="##前言
+<meta property="og:description" content="#前言
 在我们android开发过程中，无可避免地都需要对图片资源进行压缩，尽可能减少最终apk包的大小。目前压缩的方法可谓是五花八门，笔者这里主要介绍利用python脚本进行图片的批量压缩。">
 <meta property="og:image" content="http://i.imgur.com/Kw8u1l6.png">
 <meta property="og:image" content="http://i.imgur.com/wSSlLG0.png">
@@ -19,10 +19,10 @@
 <meta property="og:image" content="http://i.imgur.com/niSwhMV.png">
 <meta property="og:image" content="http://i.imgur.com/AZyrNsD.png">
 <meta property="og:image" content="http://i.imgur.com/sJppxxf.png">
-<meta property="og:updated_time" content="2016-09-10T08:00:27.012Z">
+<meta property="og:updated_time" content="2016-09-10T08:07:43.079Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python脚本实现图片压缩">
-<meta name="twitter:description" content="##前言
+<meta name="twitter:description" content="#前言
 在我们android开发过程中，无可避免地都需要对图片资源进行压缩，尽可能减少最终apk包的大小。目前压缩的方法可谓是五花八门，笔者这里主要介绍利用python脚本进行图片的批量压缩。">
 <meta name="twitter:image" content="http://i.imgur.com/Kw8u1l6.png">
   
@@ -247,9 +247,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>##前言</p>
+        <p>#前言</p>
 <p>在我们android开发过程中，无可避免地都需要对图片资源进行压缩，尽可能减少最终apk包的大小。目前压缩的方法可谓是五花八门，笔者这里主要介绍利用python脚本进行图片的批量压缩。<a id="more"></a></p>
-<p>##Tinypng</p>
+<p>#Tinypng</p>
 <p>打开它的官网 <a href="https://tinypng.com/" target="_blank" rel="external">https://tinypng.com</a> 发现其提供线上上传图片进行压缩，看到例子介绍压缩率还是蛮可观的，而且压缩前后对图片影响不大。我们点进去<strong><em>DEVELOPER API</em></strong>,可以看到其支持不少编程语言进行压缩：</p>
 <p><img src="http://i.imgur.com/Kw8u1l6.png" alt=""></p>
 <p>为了和下面介绍的方法统一，这里介绍python语言的使用，笔者用的是windows系统，下面介绍请参考windows配置。</p>
@@ -266,7 +266,7 @@ source.to_file(&quot;optimized.jpg&quot;)
 </code></pre><p>Tinypng还有很多对图片进行处理的接口，这里主要是介绍压缩就没有展开细说。其实利用Tinypng对图片进行压缩还是蛮简单的，但是蛋疼的是申请的API key每个月只支持500张的免费压缩：</p>
 <p><img src="http://i.imgur.com/SQeVvT0.png" alt=""></p>
 <p>这对于我们开发人员来说是远远不够的（当然，你可以申请多个API key或者直接付钱），所以就得继续寻找看有没有更好的替代方案。</p>
-<p>##pngquant</p>
+<p>#pngquant</p>
 <p>pngquant是国外一个有损的PNG压缩库，介绍称结合vector quantization算法生成高质量的色彩范围，用脚本同样可以处理批量图片压缩。其支持命令行和源码库形式使用，这里介绍的是使用命令行方式：</p>
 <p>1.首先，在 <a href="https://pngquant.org/" target="_blank" rel="external">pngquant官网</a>  下载适合windows系统的包：</p>
 <p><img src="http://i.imgur.com/niSwhMV.png" alt=""></p>
@@ -283,7 +283,7 @@ cmd_command = &apos;&quot;{0}&quot; 256 -s1 --force --quality=50-50 &quot;{1}&qu
 p = subprocess.Popen(cmd_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 retval = p.wait()
 </code></pre><p>以上就是对pngquant压缩代码的介绍，经测试发现，这种压缩方式有的情况下会出现压缩后的大小比压缩前还要大（压缩率为负数），笔者尝试调整–quality参数从20-100均不能解决问题（当然，并不能为了大小而影响图片质量，笔者认为参数quality在50已经是设置的最低值，这里只是做测试），暂时没找到有效的参数设置去解决，如果读者找到原因，希望可以分享下方法。</p>
-<p>##Pillow (PIL Fork)</p>
+<p>#Pillow (PIL Fork)</p>
 <p>Pillow是python内置的PIL（Python Imaging Library）的一个分支，当初使用这个库主要是因为其支持python 3.0+版本，主要是对图片进行等比例缩放。后面做了测试发现，Pillow支持对png图片的压缩还是蛮可观的（比Tinypng逊色点），下面就简单介绍下其使用：<a href="https://pillow.readthedocs.io/en/3.3.x/" target="_blank" rel="external">Pillow官网</a> </p>
 <p>1.安装Pillow的python插件：</p>
 <p><strong><em>注意，如果你电脑已经安装过python的 PIL库，请先卸掉再安装Pillow</em></strong></p>
@@ -299,7 +299,7 @@ if file.endswith(&quot;.png&quot;):
     im = im.convert(&apos;P&apos;)
 im.save(&quot;optimized.png&quot;,optimize=True)
 </code></pre><p>可以看到，上面做了一个图片是否为png的判断，主要是Pillow对png图片压缩能做到更好的处理。</p>
-<p>##总结：</p>
+<p>#总结：</p>
 <p>针对以上三种的图片压缩工具，如果你有足够多的API key或者图片只在最终发包使用前才压缩，优先考虑Tinypng，因为这个是压缩效果最好；而次之选择考虑Pillow，其较为接近Tinypng的压缩效果和出现压缩率为负数的图片几率数少；鉴于笔者没有找到有效解决pngquant出现压缩率为负数较多情况下的出现，所以笔者尽可能会减少使用。<strong><em>特别注意的是，不要对同一张图片进行多次压缩，这样必然会影响图片的质量，得不偿失。</em></strong></p>
 <p>源码参考：<a href="https://github.com/hellokugo/imgCompress" target="_blank" rel="external">https://github.com/hellokugo/imgCompress</a> </p>
 
@@ -313,7 +313,7 @@ im.save(&quot;optimized.png&quot;,optimize=True)
         <p><span>本文标题:</span><a href="/2016/09/10/python脚本实现图片压缩/">python脚本实现图片压缩</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 hellokugo 的个人博客">hellokugo</a></p>
         <p><span>发布时间:</span>2016年09月10日 - 13时30分</p>
-        <p><span>最后更新:</span>2016年09月10日 - 16时00分</p>
+        <p><span>最后更新:</span>2016年09月10日 - 16时07分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/09/10/python脚本实现图片压缩/" title="python脚本实现图片压缩">https://hellokugo.github.io/2016/09/10/python脚本实现图片压缩/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hellokugo.github.io/2016/09/10/python脚本实现图片压缩/　　作者: hellokugo" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>

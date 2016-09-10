@@ -8,8 +8,7 @@ tags:
 ---
 
 # 前言 #
-在研究资源混淆的过程中了解到微信的资源混淆工具--[AndResGuard](https://github.com/shwenzhang/AndResGuard)，这个工具的强大之处不仅仅在于混淆了冗余的资源文件名称和明显减少apk的大小（这是官方说明，小弟小试了下效果不明显，有待考证），同时不涉及生成apk的编译流程，只需要输入apk和一些命令参数即可生成所需的混淆资源后的apk。<!-- more -->
-（美团也有一套混淆资源的方法，介绍是修改AAPT处理资源文件相关的源码，牛逼哄哄的样子：[没错，我是链接](http://tech.meituan.com/mt-android-resource-obfuscation.html)）。Anyway，对于追求完美的技术人员而言，并不能满足于一个现成的工具，了解其中原理加以修改才可以灵活运用。AndResGuard主要是通过修改resources.arsc文件来打到混淆的目的，因此，本文主要是对resources.arsc的文件格式进行阐述。
+在研究资源混淆的过程中了解到微信的资源混淆工具--[AndResGuard](https://github.com/shwenzhang/AndResGuard)，这个工具的强大之处不仅仅在于混淆了冗余的资源文件名称和明显减少apk的大小（这是官方说明，小弟小试了下效果不明显，有待考证），同时不涉及生成apk的编译流程，只需要输入apk和一些命令参数即可生成所需的混淆资源后的apk。<!-- more -->（美团也有一套混淆资源的方法，介绍是修改AAPT处理资源文件相关的源码，牛逼哄哄的样子：[没错，我是链接](http://tech.meituan.com/mt-android-resource-obfuscation.html)）。Anyway，对于追求完美的技术人员而言，并不能满足于一个现成的工具，了解其中原理加以修改才可以灵活运用。AndResGuard主要是通过修改resources.arsc文件来打到混淆的目的，因此，本文主要是对resources.arsc的文件格式进行阐述。
 至于详细的实现方案和流程可参考[AndResGuard原理](http://mp.weixin.qq.com/s?__biz=MzAwNDY1ODY2OQ==&mid=208135658&idx=1&sn=ac9bd6b4927e9e82f9fa14e396183a8f#rd)
 
 # 数据结构总体介绍 #

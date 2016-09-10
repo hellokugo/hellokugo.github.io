@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://i.imgur.com/qNT1t9t.png">
 <meta property="og:image" content="http://i.imgur.com/0TKtzCp.png">
 <meta property="og:image" content="http://i.imgur.com/Z6EDzF0.png">
-<meta property="og:updated_time" content="2016-06-14T10:06:01.349Z">
+<meta property="og:updated_time" content="2016-09-10T04:52:47.484Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Resource.arsc文件格式">
 <meta name="twitter:description" content="前言在研究资源混淆的过程中了解到微信的资源混淆工具–AndResGuard，这个工具的强大之处不仅仅在于混淆了冗余的资源文件名称和明显减少apk的大小（这是官方说明，小弟小试了下效果不明显，有待考证），同时不涉及生成apk的编译流程，只需要输入apk和一些命令参数即可生成所需的混淆资源后的apk。">
@@ -250,7 +250,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在研究资源混淆的过程中了解到微信的资源混淆工具–<a href="https://github.com/shwenzhang/AndResGuard" target="_blank" rel="external">AndResGuard</a>，这个工具的强大之处不仅仅在于混淆了冗余的资源文件名称和明显减少apk的大小（这是官方说明，小弟小试了下效果不明显，有待考证），同时不涉及生成apk的编译流程，只需要输入apk和一些命令参数即可生成所需的混淆资源后的apk。<a id="more"></a><br>（美团也有一套混淆资源的方法，介绍是修改AAPT处理资源文件相关的源码，牛逼哄哄的样子：<a href="http://tech.meituan.com/mt-android-resource-obfuscation.html" target="_blank" rel="external">没错，我是链接</a>）。Anyway，对于追求完美的技术人员而言，并不能满足于一个现成的工具，了解其中原理加以修改才可以灵活运用。AndResGuard主要是通过修改resources.arsc文件来打到混淆的目的，因此，本文主要是对resources.arsc的文件格式进行阐述。<br>至于详细的实现方案和流程可参考<a href="http://mp.weixin.qq.com/s?__biz=MzAwNDY1ODY2OQ==&amp;mid=208135658&amp;idx=1&amp;sn=ac9bd6b4927e9e82f9fa14e396183a8f#rd" target="_blank" rel="external">AndResGuard原理</a></p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在研究资源混淆的过程中了解到微信的资源混淆工具–<a href="https://github.com/shwenzhang/AndResGuard" target="_blank" rel="external">AndResGuard</a>，这个工具的强大之处不仅仅在于混淆了冗余的资源文件名称和明显减少apk的大小（这是官方说明，小弟小试了下效果不明显，有待考证），同时不涉及生成apk的编译流程，只需要输入apk和一些命令参数即可生成所需的混淆资源后的apk。<a id="more"></a>（美团也有一套混淆资源的方法，介绍是修改AAPT处理资源文件相关的源码，牛逼哄哄的样子：<a href="http://tech.meituan.com/mt-android-resource-obfuscation.html" target="_blank" rel="external">没错，我是链接</a>）。Anyway，对于追求完美的技术人员而言，并不能满足于一个现成的工具，了解其中原理加以修改才可以灵活运用。AndResGuard主要是通过修改resources.arsc文件来打到混淆的目的，因此，本文主要是对resources.arsc的文件格式进行阐述。<br>至于详细的实现方案和流程可参考<a href="http://mp.weixin.qq.com/s?__biz=MzAwNDY1ODY2OQ==&amp;mid=208135658&amp;idx=1&amp;sn=ac9bd6b4927e9e82f9fa14e396183a8f#rd" target="_blank" rel="external">AndResGuard原理</a></p>
 <h1 id="数据结构总体介绍"><a href="#数据结构总体介绍" class="headerlink" title="数据结构总体介绍"></a>数据结构总体介绍</h1><p>resources.arsc文件格式是由一系列的chunk构成。总体而言，可以大致分为五个chunk，分别是TYPETABLE，TYPEPACKAGE，TYPE_STRING， TYPETYPE和TYPESPEC；而这些chunk组成的结构就是资源索引表头部+字符串资源池+N个Package数据块。贴上一张传烂的图：</p>
 <p><img src="http://i.imgur.com/UVU3hWW.png" alt=""></p>
 <p>是的，看完这图我也是懵逼的。没关系，下面作一个详细点的介绍。</p>
@@ -339,7 +339,7 @@ resConfig：指向一个ResTable_config,用来描述配置信息,地区,语言,�
         <p><span>本文标题:</span><a href="/2016/09/03/Resource.arsc文件格式/">Resource.arsc文件格式</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 hellokugo 的个人博客">hellokugo</a></p>
         <p><span>发布时间:</span>2016年09月03日 - 21时58分</p>
-        <p><span>最后更新:</span>2016年06月14日 - 18时06分</p>
+        <p><span>最后更新:</span>2016年09月10日 - 12时52分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/09/03/Resource.arsc文件格式/" title="Resource.arsc文件格式">https://hellokugo.github.io/2016/09/03/Resource.arsc文件格式/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hellokugo.github.io/2016/09/03/Resource.arsc文件格式/　　作者: hellokugo" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>

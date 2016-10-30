@@ -3,14 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>hellokugo</title>
+  <title>65536问题生成多dex处理 | hellokugo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="hellokugo">
-<meta property="og:url" content="https://hellokugo.github.io/index.html">
+  <meta name="description" content="需求背景目前Android在处理65536的问题上提出了很多解决方案，google官方介绍的在Android studio上分dex开关控制是很多项目的首选，但这是基于源代码编译过程中去处理（或者说，在分完多dex后就是最终的apk包）。这里要说的一种业务场景，是提供一种方便接入第三方sdk平台的65536处理，区别于一次打包即可生成最终apk，这里是针对源apk（可以理解为通过开发工具打出的不接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="65536问题生成多dex处理">
+<meta property="og:url" content="https://hellokugo.github.io/2016/10/30/65536生成多dex处理/index.html">
 <meta property="og:site_name" content="hellokugo">
+<meta property="og:description" content="需求背景目前Android在处理65536的问题上提出了很多解决方案，google官方介绍的在Android studio上分dex开关控制是很多项目的首选，但这是基于源代码编译过程中去处理（或者说，在分完多dex后就是最终的apk包）。这里要说的一种业务场景，是提供一种方便接入第三方sdk平台的65536处理，区别于一次打包即可生成最终apk，这里是针对源apk（可以理解为通过开发工具打出的不接">
+<meta property="og:image" content="http://i.imgur.com/CeIPfJJ.png">
+<meta property="og:image" content="http://i.imgur.com/oqCJpyh.png">
+<meta property="og:image" content="http://i.imgur.com/b1Adfdy.png">
+<meta property="og:image" content="http://i.imgur.com/XacVseY.png">
+<meta property="og:image" content="http://i.imgur.com/FFynHi2.png">
+<meta property="og:image" content="http://i.imgur.com/wr9Ii0c.png">
+<meta property="og:image" content="http://i.imgur.com/roV1hbC.png">
+<meta property="og:updated_time" content="2016-10-30T09:08:41.416Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hellokugo">
+<meta name="twitter:title" content="65536问题生成多dex处理">
+<meta name="twitter:description" content="需求背景目前Android在处理65536的问题上提出了很多解决方案，google官方介绍的在Android studio上分dex开关控制是很多项目的首选，但这是基于源代码编译过程中去处理（或者说，在分完多dex后就是最终的apk包）。这里要说的一种业务场景，是提供一种方便接入第三方sdk平台的65536处理，区别于一次打包即可生成最终apk，这里是针对源apk（可以理解为通过开发工具打出的不接">
+<meta name="twitter:image" content="http://i.imgur.com/CeIPfJJ.png">
   
     <link rel="alternative" href="/atom.xml" title="hellokugo" type="application/atom+xml">
   
@@ -24,9 +36,6 @@
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   
-    
-    
-  
   
       <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
   
@@ -37,8 +46,8 @@
       var yiliaConfig = {
           fancybox: true,
           animate: true,
-          isHome: true,
-          isPost: false,
+          isHome: false,
+          isPost: true,
           isArchive: false,
           isTag: false,
           isCategory: false,
@@ -194,9 +203,7 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap">
-  
-    <article id="post-65536生成多dex处理" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-65536生成多dex处理" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2016/10/30/65536生成多dex处理/" class="article-date">
@@ -212,12 +219,27 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/30/65536生成多dex处理/">65536问题生成多dex处理</a>
+    <h1 class="article-title" itemprop="name">
+      65536问题生成多dex处理
     </h1>
   
 
       </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android，多dex，65536/">Android，多dex，65536</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
       
     
     <div class="article-entry" itemprop="articleBody">
@@ -262,159 +284,68 @@
       
     </div>
     
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android，多dex，65536/">Android，多dex，65536</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
   </div>
   
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-python脚本实现图片压缩" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/10/python脚本实现图片压缩/" class="article-date">
-      <time datetime="2016-09-10T05:30:22.150Z" itemprop="datePublished">2016-09-10</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
     
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/10/python脚本实现图片压缩/">python脚本实现图片压缩</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在我们android开发过程中，无可避免地都需要对图片资源进行压缩，尽可能减少最终apk包的大小。目前压缩的方法可谓是五花八门，笔者这里主要介绍利用python脚本进行图片的批量压缩。
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/09/10/python脚本实现图片压缩/#more">More >></a>
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/10/30/65536生成多dex处理/">65536问题生成多dex处理</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 hellokugo 的个人博客">hellokugo</a></p>
+        <p><span>发布时间:</span>2016年10月30日 - 17时09分</p>
+        <p><span>最后更新:</span>2016年10月30日 - 17时08分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/10/30/65536生成多dex处理/" title="65536问题生成多dex处理">https://hellokugo.github.io/2016/10/30/65536生成多dex处理/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://hellokugo.github.io/2016/10/30/65536生成多dex处理/　　作者: hellokugo" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-优化动态加载方案" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/10/优化动态加载方案/" class="article-date">
-      <time datetime="2016-09-10T04:47:22.685Z" itemprop="datePublished">2016-09-10</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/10/优化动态加载方案/">优化动态加载方案</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在之前的动态加载方案中，是可以将多个apk（这里可以理解为封装的第三方sdk）模块进行动态加载。但在这里面有一个很蛋疼的问题，就是由于android系统底层对资源加载方式的不一样导致处理方式也不同，具体可参考 <a href="http://mogu.io/117-117">那些年蘑菇街Android组件与插件化背后的故事 – 插件篇(一)</a> ，在文章的最后提及到：
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Mobile/">Mobile</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/09/10/优化动态加载方案/#more">More >></a>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
         </p>
-      
-      <div class="clearfix"></div>
     </div>
-    
-  </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2016/09/10/python脚本实现图片压缩/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python脚本实现图片压缩</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
   
 </article>
 
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#需求背景"><span class="toc-number">1.</span> <span class="toc-text">需求背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#处理方案"><span class="toc-number">2.</span> <span class="toc-text">处理方案</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#道路是曲折的"><span class="toc-number">3.</span> <span class="toc-text">道路是曲折的</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思考"><span class="toc-number">3.1.</span> <span class="toc-text">思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第一点"><span class="toc-number">3.2.</span> <span class="toc-text">第一点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二点"><span class="toc-number">3.3.</span> <span class="toc-text">第二点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#计算-method方法数"><span class="toc-number">3.3.1.</span> <span class="toc-text">计算.method方法数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改smali源码"><span class="toc-number">3.4.</span> <span class="toc-text">修改smali源码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#filed的65536问题"><span class="toc-number">3.5.</span> <span class="toc-text">filed的65536问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改mainDexClasses-rules"><span class="toc-number">3.6.</span> <span class="toc-text">修改mainDexClasses.rules</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Todo"><span class="toc-number">4.</span> <span class="toc-text">Todo</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
 
 
 
@@ -422,273 +353,66 @@
 
 
 
-
-  
-    <article id="post-Hexo搭建优化部署" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/03/Hexo搭建优化部署/" class="article-date">
-      <time datetime="2016-09-03T14:56:45.289Z" itemprop="datePublished">2016-09-03</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
     
-      <input type="hidden" class="isFancy" />
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2016/10/30/65536生成多dex处理/" data-title="65536问题生成多dex处理" data-url="https://hellokugo.github.io/2016/10/30/65536生成多dex处理/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"null"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = '/js/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
     
-    
-      <header class="article-header">
+
+
+
+    <div class="scroll" id="post-nav-button">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/03/Hexo搭建优化部署/">Hexo搭建优化部署</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>作为一名专业的技术码农，经验积累和技术分享是一项必不可少的软技能。俗话说，好记性不如烂笔头，在平时工作中遇到的各种奇葩问题和学习感悟用文档记录是个很好的习惯，同时也可以用做分享，让别人或者自己少走弯路。目前网上各种技术博客可谓百花齐放，诸如CSDN、51blog和不少公司定制的分享博客等，当然也有不少公司内部分享的.md记录文档。当然了，如果<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Others/">Others</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/other/">other</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/09/03/Hexo搭建优化部署/#more">More >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-简析DroidPlugin之Hook" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/03/简析DroidPlugin之Hook/" class="article-date">
-      <time datetime="2016-09-03T13:58:46.743Z" itemprop="datePublished">2016-09-03</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/03/简析DroidPlugin之Hook/">简析DroidPlugin之Hook</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>被誉为“安卓黑科技”的开源框架DroidPlugin，是目前较为流行的安卓动态加载技术的典范。免安装和免修改运行第三方sdk，实现多团队协助开发，是360推出这个牛逼able框架的主打亮点。那么，它是如何一步步去实现这个神奇的框架的呢？又和我们常见的动态加载技术有何区别去值得我们学习的？由于目前国内对这个框架没太多的研究，很多地方只能做到点到即止。本文主要分享其hook的过程。
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Mobile/">Mobile</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/09/03/简析DroidPlugin之Hook/#more">More >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-简析Android组件安全" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/03/简析Android组件安全/" class="article-date">
-      <time datetime="2016-09-03T13:58:46.740Z" itemprop="datePublished">2016-09-03</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/03/简析Android组件安全/">简析Android组件安全</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前段时间在学习github上DroidPlgin插件的时候接触到不少专业术语，诸如预先占坑、Activity劫持和Hook等，一开始看还真是感觉雾里看花。在查阅资料的过程中发现了国人出版的《Android软件安全与逆向分析》，在理解Activity劫持的过程中引申了Android四大组件的安全。知识点不难却感觉蛮有趣，故分享之。
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Mobile/">Mobile</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/09/03/简析Android组件安全/#more">More >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Resource.arsc文件格式" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/03/Resource.arsc文件格式/" class="article-date">
-      <time datetime="2016-09-03T13:58:46.737Z" itemprop="datePublished">2016-09-03</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
+            <a href="/2016/09/10/python脚本实现图片压缩/" title="下一篇: python脚本实现图片压缩">
+                <i class="fa fa-angle-right"></i>
+            </a>
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/03/Resource.arsc文件格式/">Resource.arsc文件格式</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在研究资源混淆的过程中了解到微信的资源混淆工具–<a href="https://github.com/shwenzhang/AndResGuard">AndResGuard</a>，这个工具的强大之处不仅仅在于混淆了冗余的资源文件名称和明显减少apk的大小（这是官方说明，小弟小试了下效果不明显，有待考证），同时不涉及生成apk的编译流程，只需要输入apk和一些命令参数即可生成所需的混淆资源后的apk。
-          
-      
     </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Mobile/">Mobile</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/09/03/Resource.arsc文件格式/#more">More >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/30/65536生成多dex处理/">65536问题生成多dex处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/python脚本实现图片压缩/">python脚本实现图片压缩</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/优化动态加载方案/">优化动态加载方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/Hexo搭建优化部署/">Hexo搭建优化部署</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/简析DroidPlugin之Hook/">简析DroidPlugin之Hook</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/简析Android组件安全/">简析Android组件安全</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/Resource.arsc文件格式/">Resource.arsc文件格式</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
 
 
 
-
-
-
-
-
-
-  
-  
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">

@@ -8,17 +8,17 @@
   <meta name="description" content="需求背景目前Android在处理65536的问题上提出了很多解决方案，google官方介绍的在Android studio上分dex开关控制是很多项目的首选，但这是基于源代码编译过程中去处理（或者说，在分完多dex后就是最终的apk包）。这里要说的一种业务场景，是提供一种方便接入第三方sdk平台的65536处理，区别于一次打包即可生成最终apk，这里是针对源apk（可以理解为通过开发工具打出的不接">
 <meta property="og:type" content="article">
 <meta property="og:title" content="65536问题生成多dex处理">
-<meta property="og:url" content="https://hellokugo.github.io/2016/10/30/65536生成多dex处理/index.html">
+<meta property="og:url" content="https://hellokugo.github.io/2016/10/30/65536问题生成多dex处理/index.html">
 <meta property="og:site_name" content="hellokugo">
 <meta property="og:description" content="需求背景目前Android在处理65536的问题上提出了很多解决方案，google官方介绍的在Android studio上分dex开关控制是很多项目的首选，但这是基于源代码编译过程中去处理（或者说，在分完多dex后就是最终的apk包）。这里要说的一种业务场景，是提供一种方便接入第三方sdk平台的65536处理，区别于一次打包即可生成最终apk，这里是针对源apk（可以理解为通过开发工具打出的不接">
 <meta property="og:image" content="http://i.imgur.com/CeIPfJJ.png">
-<meta property="og:image" content="http://i.imgur.com/oqCJpyh.png">
+<meta property="og:image" content="http://i.imgur.com/whvQIJx.png">
 <meta property="og:image" content="http://i.imgur.com/b1Adfdy.png">
 <meta property="og:image" content="http://i.imgur.com/XacVseY.png">
 <meta property="og:image" content="http://i.imgur.com/FFynHi2.png">
 <meta property="og:image" content="http://i.imgur.com/wr9Ii0c.png">
 <meta property="og:image" content="http://i.imgur.com/roV1hbC.png">
-<meta property="og:updated_time" content="2016-10-30T09:08:41.416Z">
+<meta property="og:updated_time" content="2016-10-30T09:20:06.303Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="65536问题生成多dex处理">
 <meta name="twitter:description" content="需求背景目前Android在处理65536的问题上提出了很多解决方案，google官方介绍的在Android studio上分dex开关控制是很多项目的首选，但这是基于源代码编译过程中去处理（或者说，在分完多dex后就是最终的apk包）。这里要说的一种业务场景，是提供一种方便接入第三方sdk平台的65536处理，区别于一次打包即可生成最终apk，这里是针对源apk（可以理解为通过开发工具打出的不接">
@@ -203,10 +203,10 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-65536生成多dex处理" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-65536问题生成多dex处理" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/10/30/65536生成多dex处理/" class="article-date">
+      <a href="/2016/10/30/65536问题生成多dex处理/" class="article-date">
       <time datetime="2016-10-30T09:09:20.650Z" itemprop="datePublished">2016-10-30</time>
 </a>
     </div>
@@ -261,7 +261,7 @@
 <p><img src="http://i.imgur.com/CeIPfJJ.png" alt=""></p>
 <p>这里注意的是，计算出来的有两个方法数，分别是6048和references的8235。</p>
 <p>我们可以用dex-method-counts.jar来计算上述jar包的方法数，得出的结果是8235。</p>
-<p><img src="http://i.imgur.com/oqCJpyh.png" alt=""></p>
+<p><img src="http://i.imgur.com/whvQIJx.png" alt=""></p>
 <p>Android studio统计出来的两个数值有什么区别呢？通俗点来说，每个类里面的方法不单单只有自己类所定义的方法，还有引用了其他包或者是系统定义类的方法，而references统计出来的就是包含这些引用方法的数目。经测试发现，用apktool回编出现65536问题提示的统计方法数正式这个references所代表的数值。这样一看，貌似接下来就很明朗了，直接用现成的dex-method-counts.jar就可以在移动smali文件过程中计算究竟移动后的方法数。</p>
 <p>但是，这里面就涉及另外一个问题，我们知道，dex-method-counts.jar统计的是dex文件，而我们的文件单位是smali，难道每移动一次就要用smlia工具生成dex再计算？这样所耗费的时间可想而知，因为我们并不能控制移动的次数。这样就迫使我们要考虑是继续查找其他计算方法还是在现有的基础上选择合适的计算时机。</p>
 <h3 id="计算-method方法数"><a href="#计算-method方法数" class="headerlink" title="计算.method方法数"></a>计算.method方法数</h3><p>参考 <a href="http://blog.csdn.net/chenjie19891104/article/details/51258183" target="_blank" rel="external">U8SDK——支持自动拆分成多个dex文件(MultiDex支持)</a>一文，发现了另外一种计算思路，即 直接计算smali文件的以.method开头的数目来计算当前smali文件的方法数。通过测试，该方法只是计算当前smali的直接方法数（即该samli定义的方法数，不包含引用数），我们从Android studio的计算方式知道，这样计算出来的方法数并不符合我们预期，因为肯定会比回编的smali工具计算得少（因为统计的是references方法数）。但是这里有一个思路，既然用这种方法统计出来的方法数是比正常统计的少，那么在移动smali计算过程中移动后所剩下smali的方法数肯定是比阈值要低。简单的计算公式：</p>
@@ -288,13 +288,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/10/30/65536生成多dex处理/">65536问题生成多dex处理</a></p>
+        <p><span>本文标题:</span><a href="/2016/10/30/65536问题生成多dex处理/">65536问题生成多dex处理</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 hellokugo 的个人博客">hellokugo</a></p>
         <p><span>发布时间:</span>2016年10月30日 - 17时09分</p>
-        <p><span>最后更新:</span>2016年10月30日 - 17时08分</p>
+        <p><span>最后更新:</span>2016年10月30日 - 17时20分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/10/30/65536生成多dex处理/" title="65536问题生成多dex处理">https://hellokugo.github.io/2016/10/30/65536生成多dex处理/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://hellokugo.github.io/2016/10/30/65536生成多dex处理/　　作者: hellokugo" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/10/30/65536问题生成多dex处理/" title="65536问题生成多dex处理">https://hellokugo.github.io/2016/10/30/65536问题生成多dex处理/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://hellokugo.github.io/2016/10/30/65536问题生成多dex处理/　　作者: hellokugo" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -356,7 +356,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/10/30/65536生成多dex处理/" data-title="65536问题生成多dex处理" data-url="https://hellokugo.github.io/2016/10/30/65536生成多dex处理/"></div>
+    <div class="ds-thread" data-thread-key="2016/10/30/65536问题生成多dex处理/" data-title="65536问题生成多dex处理" data-url="https://hellokugo.github.io/2016/10/30/65536问题生成多dex处理/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -388,7 +388,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/30/65536生成多dex处理/">65536问题生成多dex处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/python脚本实现图片压缩/">python脚本实现图片压缩</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/优化动态加载方案/">优化动态加载方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/Hexo搭建优化部署/">Hexo搭建优化部署</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/简析DroidPlugin之Hook/">简析DroidPlugin之Hook</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/简析Android组件安全/">简析Android组件安全</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/Resource.arsc文件格式/">Resource.arsc文件格式</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/30/65536问题生成多dex处理/">65536问题生成多dex处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/python脚本实现图片压缩/">python脚本实现图片压缩</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/优化动态加载方案/">优化动态加载方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/Hexo搭建优化部署/">Hexo搭建优化部署</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/简析DroidPlugin之Hook/">简析DroidPlugin之Hook</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/简析Android组件安全/">简析Android组件安全</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/Resource.arsc文件格式/">Resource.arsc文件格式</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");

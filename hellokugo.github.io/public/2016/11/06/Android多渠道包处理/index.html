@@ -3,18 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hexo搭建优化部署 | hellokugo</title>
+  <title>Android多渠道包处理 | hellokugo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言作为一名专业的技术码农，经验积累和技术分享是一项必不可少的软技能。俗话说，好记性不如烂笔头，在平时工作中遇到的各种奇葩问题和学习感悟用文档记录是个很好的习惯，同时也可以用做分享，让别人或者自己少走弯路。目前网上各种技术博客可谓百花齐放，诸如CSDN、51blog和不少公司定制的分享博客等，当然也有不少公司内部分享的.md记录文档。当然了，如果">
+  <meta name="description" content="使用说明众所周知，Android会在不同的应用市场或者渠道去发布自己的产品，然后根据不同渠道的反馈去做相应产品的后续版本。目前用得比较多的是像集成友盟在AndroidManifest的meta-data加入渠道信息然后在代码读取，我们前期业务的做法是打包过程中在assets目录下加入标识文件记录渠道信息，由于这样的做法是在apk签名前插入，换言之每处理一个渠道就要做一次签名打包的操作，如果处理多个">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo搭建优化部署">
-<meta property="og:url" content="https://hellokugo.github.io/2016/09/03/Hexo搭建优化部署/index.html">
+<meta property="og:title" content="Android多渠道包处理">
+<meta property="og:url" content="https://hellokugo.github.io/2016/11/06/Android多渠道包处理/index.html">
 <meta property="og:site_name" content="hellokugo">
-<meta property="og:description" content="前言作为一名专业的技术码农，经验积累和技术分享是一项必不可少的软技能。俗话说，好记性不如烂笔头，在平时工作中遇到的各种奇葩问题和学习感悟用文档记录是个很好的习惯，同时也可以用做分享，让别人或者自己少走弯路。目前网上各种技术博客可谓百花齐放，诸如CSDN、51blog和不少公司定制的分享博客等，当然也有不少公司内部分享的.md记录文档。当然了，如果">
-<meta property="og:updated_time" content="2016-09-10T04:52:16.667Z">
+<meta property="og:description" content="使用说明众所周知，Android会在不同的应用市场或者渠道去发布自己的产品，然后根据不同渠道的反馈去做相应产品的后续版本。目前用得比较多的是像集成友盟在AndroidManifest的meta-data加入渠道信息然后在代码读取，我们前期业务的做法是打包过程中在assets目录下加入标识文件记录渠道信息，由于这样的做法是在apk签名前插入，换言之每处理一个渠道就要做一次签名打包的操作，如果处理多个">
+<meta property="og:image" content="http://i.imgur.com/H5AkBcn.png">
+<meta property="og:image" content="http://i.imgur.com/muTxwrF.png">
+<meta property="og:updated_time" content="2016-11-05T18:21:48.571Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo搭建优化部署">
-<meta name="twitter:description" content="前言作为一名专业的技术码农，经验积累和技术分享是一项必不可少的软技能。俗话说，好记性不如烂笔头，在平时工作中遇到的各种奇葩问题和学习感悟用文档记录是个很好的习惯，同时也可以用做分享，让别人或者自己少走弯路。目前网上各种技术博客可谓百花齐放，诸如CSDN、51blog和不少公司定制的分享博客等，当然也有不少公司内部分享的.md记录文档。当然了，如果">
+<meta name="twitter:title" content="Android多渠道包处理">
+<meta name="twitter:description" content="使用说明众所周知，Android会在不同的应用市场或者渠道去发布自己的产品，然后根据不同渠道的反馈去做相应产品的后续版本。目前用得比较多的是像集成友盟在AndroidManifest的meta-data加入渠道信息然后在代码读取，我们前期业务的做法是打包过程中在assets目录下加入标识文件记录渠道信息，由于这样的做法是在apk签名前插入，换言之每处理一个渠道就要做一次签名打包的操作，如果处理多个">
+<meta name="twitter:image" content="http://i.imgur.com/H5AkBcn.png">
   
     <link rel="alternative" href="/atom.xml" title="hellokugo" type="application/atom+xml">
   
@@ -195,11 +198,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-Hexo搭建优化部署" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Android多渠道包处理" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/09/03/Hexo搭建优化部署/" class="article-date">
-      <time datetime="2016-09-03T14:56:45.289Z" itemprop="datePublished">2016-09-03</time>
+      <a href="/2016/11/06/Android多渠道包处理/" class="article-date">
+      <time datetime="2016-11-05T18:20:43.251Z" itemprop="datePublished">2016-11-06</time>
 </a>
     </div>
   
@@ -212,7 +215,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Hexo搭建优化部署
+      Android多渠道包处理
     </h1>
   
 
@@ -221,13 +224,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Others/">Others</a>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/other/">other</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android，，多渠道，pyqt/">Android，，多渠道，pyqt</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -237,27 +240,103 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>作为一名专业的技术码农，经验积累和技术分享是一项必不可少的软技能。俗话说，好记性不如烂笔头，在平时工作中遇到的各种奇葩问题和学习感悟用文档记录是个很好的习惯，同时也可以用做分享，让别人或者自己少走弯路。目前网上各种技术博客可谓百花齐放，诸如CSDN、51blog和不少公司定制的分享博客等，当然也有不少公司内部分享的.md记录文档。当然了，如果<br><a id="more"></a>你是一名“异类”的程序猿，不满足于现有的博客框架，不妨考虑下本文介绍的Github pages+Hexo+Nodejs搭建个人blog。</p>
-<h1 id="概要说明"><a href="#概要说明" class="headerlink" title="概要说明"></a>概要说明</h1><p>网上对于这种博客的搭建应该是有相当多的介绍了，<a href="http://cstsinghua.github.io/2016/06/16/Github%20pages+Hexo+Nodejs%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BAblog/#建站&quot;" target="_blank" rel="external">简单的搭建</a>或者换一个皮肤相信也难不到大家。但是大家在使用的过程中应该会发现，框架的搭建是依赖于当前的电脑，假如电脑要重装或者直接挂了要换一台新的，这样原本的记录岂不是全没了？我一直都相信，高手在人间，发现这个问题的早有人在，而解决的办法总比问题多，本文的介绍就是参考网上的配置做法做点补充：<a href="http://crazymilk.github.io/2015/12/28/GitHub-Pages-Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/#more" target="_blank" rel="external">参考文章</a></p>
-<h1 id="搭建流程"><a href="#搭建流程" class="headerlink" title="搭建流程"></a>搭建流程</h1><p>参考上面提供文章链接中的第四点 <strong>优化部署与管理</strong>，笔者在配置过程出现了几个问题导致一直配置失败，在这里分享下希望有同样问题的读者可以参考，过程大同小异：</p>
-<ol>
-<li>创建仓库，hellokugo.github.io.git；<br></li>
-<li>创建两个分支：master 与 hexo；<br></li>
-<li>设置hexo为默认分支（因为我们只需要手动管理这个分支上的Hexo网站文件）；<br></li>
-<li>使用git clone git@github.com:hellokugo/hellokugo.github.io.git拷贝仓库；<br></li>
-<li><p>hellokugo.github.io文件夹下通过Git bash依次执行npm install hexo、hexo init、npm install 和 npm install hexo-deployer-git（此时当前分支应显示为hexo）;<br></p>
-<p> <strong>注意1：笔者在这里踩了坑，在执行hexo init的时候会把第二步clone下来的文件.git给删掉，导致在下面做代码提交步骤时一直报找不到.git文件错误，所以，在执行第五步或者执行hexo init前把.git文件放到上级目录（或者在执行完第五步再把.git文件放回来，这个没有做测试），这样就不会出现这样的错误了。这里可以用git branch来检查下当前分支会否为hexo</strong><br></p>
-</li>
-<li><p>修改_config.yml中的deploy参数，分支应为master（可用git branch命令来检查）；</p>
-</li>
-<li><p>依次执行git add .、git commit -m “…”、git push origin hexo提交网站相关的文件；</p>
-<p> <strong>注意2：这里最后一步git push origin hexo，对于还没习惯git工具的读者可能会直接按照这个命令输入，然后就抛出origin未定义的错误，这个如果有点git工具使用经验的读者来说，是应该在这命令前先定义origin，即git remote add origin git@github.com:hellokugo/hellokugo.github.io.git（这里是你的仓库github地址）</strong><br></p>
-</li>
-<li><p>执行hexo generate -d生成网站并部署到GitHub上。</p>
-<p> <strong>注意3：有些读者可能走到这一步时就抛出FATE Deploy failed: git，这个问题在于执行第五步的最后一句命令npm install hexo-deployer-git没有把相关文件记录下来导致出错，不过这可能不是每个人都会出现，如果出现了，再执行npm install hexo-deployer-git –save,，然后再部署即可。</strong><br></p>
-</li>
-</ol>
-<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>其实上述步骤完全可以写一个简单的python脚本实现（有需要可以提供一个参数输入，用于填写提交日志），这里就不累赘了。最后，感谢参考文章中笔者提供这种思路去巧妙解决电脑各种丢失数据而导致的问题，真心想说一句，站在巨人的肩上，技术路上不孤单。</p>
+        <h1 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h1><p>众所周知，Android会在不同的应用市场或者渠道去发布自己的产品，然后根据不同渠道的反馈去做相应产品的后续版本。目前用得比较多的是像集成友盟在AndroidManifest的meta-data加入渠道信息然后在代码读取，我们前期业务的做法是打包过程中在assets目录下加入标识文件记录渠道信息，由于这样的做法是在apk签名前插入，换言之每处理一个渠道就要做一次签名打包的操作，如果处理多个渠道消耗的时间就需要非常长，这样的大前提下就要思考是否有更好的打渠道方式。</p>
+<h1 id="处理方案"><a href="#处理方案" class="headerlink" title="处理方案"></a>处理方案</h1><p>我们知道，apk其实就是一个zip格式的文件。在 <a href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT" target="_blank" rel="external">zip格式介绍</a>中我们发现，zip留给我们一个可扩展的comment字段，这个字段的添加修改并不会影响签名后的apk包。换言之，以往我们在打多渠道的时候是每打一个渠道就要签名一个apk，现在用这种方式可以是实现签名一个apk来打多个渠道包，而且这些apk包并不影响原本的签名，这样所消耗的时间肯定会大大减少。后续发现github上有人提供这个打包方式，大概的思路和<a href="https://github.com/mcxiaoke/packer-ng-plugin" target="_blank" rel="external">packer-ng-plugin</a> 是一致的，区别在于考虑到业务打渠道的时机基本是在第三方提审过后签名apk才打入，这时候尽可能让打渠道的工作交由相应的运营，所以做出一个可操作简单友好的“傻瓜式”GUI，方便任何人都可以参与这项工作。</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>这里要说明下，打渠道是用python语言，并且通过编写pyqt来实现界面化；读取渠道信息是在java语言层面，具体是直接读zip的字节码来获取。还有一点是，测试过程中发现通过zip comment打渠道方式在有的时候没有通过对apk重签名（apk重新签名会把这个字段抹去）也会出现读取不到渠道信息的情况，这样为了尽可能避免这种情况出现，我们参考了 <a href="http://tech.meituan.com/mt-apk-packaging.html" target="_blank" rel="external">美团Android自动化之旅—生成渠道包</a>，在签名后的apk插入空的META-INF/channel_file.txt做了规避处理，防止zip被破坏了导致渠道信息丢失而读取不到的问题。当然了，美团这种处理方案在apk重签名后也是会导致渠道信息丢失的问题。</p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="最终界面"><a href="#最终界面" class="headerlink" title="最终界面"></a>最终界面</h2><p><img src="http://i.imgur.com/H5AkBcn.png" alt=""></p>
+<p><img src="http://i.imgur.com/muTxwrF.png" alt=""></p>
+<p>整体而言，操作的界面还是比较简单的，主要是两个tab：第一个是查看渠道信息，这里面首先读取comment字段，没有渠道信息则读取META-INF目录下的标识渠道的空文件，如果也没有则友好提示；第二个是打渠道的tab，可以看到有一个Extra可选填入操作，这个字段是供业务扩展字段，可以为空，实现的规则也是comment和空文件标识同时写入，当然，channel是可填入多个渠道标识实现打包。</p>
+<h2 id="写入渠道信息"><a href="#写入渠道信息" class="headerlink" title="写入渠道信息"></a>写入渠道信息</h2><p>安装pyqt和使用这里就不做介绍了，主要是说说实现的核心代码：</p>
+<pre><code>with zipfile.ZipFile(tempApk,&apos;a&apos;,zipfile.ZIP_DEFLATED) as myzip:
+       log_utils.getLogger().debug(&apos;do insert empty_channel_file.....&apos;)
+       # 遍历META-INF目录下文件，如果本来就存有渠道空文件，返回提示不能生成渠道包
+       fileList = myzip.namelist()
+       for f in fileList:
+           if f.startswith(&apos;META-INF/channelId&apos;):
+               log_utils.getLogger().info(&apos;channel file has exists: &apos; + f)
+               return (&apos;Failed ! channel file has exists: &apos; + f)
+       # 添加以渠道id命令的空文件到META-INF/文件下
+       channel_file = &quot;META-INF/channelId_{channel}&quot;.format(channel=symbol)
+       if not os.path.exists(&quot;empty_file.txt&quot;):
+           log_utils.getLogger().debug(&apos;empty_file.txt is not exists..&apos;)
+           return (&apos;Failed ! empty_file.txt is not exists..&apos;)
+       myzip.write(&quot;empty_file.txt&quot;, channel_file)
+
+       log_utils.getLogger().debug(&apos;do change EOCD comment.....&apos;)
+       myzip.comment = str(commentDict).encode(&apos;utf-8&apos;) # 修改comment字段
+       myzip.close()
+       targetName = os.path.join(out_dir,originName.split(&quot;.&quot;)[0] + &apos;(&apos; + symbol + &apos;).apk&apos;)
+       shutil.move(tempApk,targetName)
+</code></pre><p>代码应该比较清晰，首先在apk的META-INF目录下添加空的渠道标识文件，然后再添加comment字段。</p>
+<h2 id="查看渠道信息"><a href="#查看渠道信息" class="headerlink" title="查看渠道信息"></a>查看渠道信息</h2><pre><code>with zipfile.ZipFile(signedApk,&apos;r&apos;,zipfile.ZIP_DEFLATED) as myzip:
+    tag = &apos;comment&apos;
+    info = str(myzip.comment,encoding = &quot;utf-8&quot;)
+    if not info: # 不存在comment字段，读meta-inf文件下空渠道信息
+        fileList = myzip.namelist()
+        for f in fileList:
+            if f.startswith(&apos;META-INF/channelId&apos;):
+                info = f.split(&apos;_&apos;,1)[1]
+                tag = &apos;empty_file&apos;
+
+    return info,tag
+</code></pre><p>上述代码实现是先读取comment，没有则读取空文件标识，返回不同结果。</p>
+<h2 id="java读取渠道信息"><a href="#java读取渠道信息" class="headerlink" title="java读取渠道信息"></a>java读取渠道信息</h2><p>上述GUI是本地可供快速查询和打渠道的工具，在我们的业务代码里肯定也需要读取具体的渠道信息用于上报，上述思路中也说了，我们是直接读取zip的字节码来获取comment信息的，核心代码参考：</p>
+<pre><code>private static void readComment(File file) {
+    RandomAccessFile zipFile = null;
+    try {
+        zipFile = new RandomAccessFile(file, &quot;r&quot;);
+
+        long fileSize = zipFile.length();
+        /* find the magic number in a reverse manner */
+        for (long i = 1; fileSize - i &gt;= 0; ++i) {
+            zipFile.seek(fileSize - i);
+            byte b = zipFile.readByte();
+            if (b == 0x06) {
+                zipFile.seek(fileSize - i - 3);
+                /* check for magic &quot;0x06054b50&quot; in little endian */
+                byte[] key = new byte[4];
+                zipFile.readFully(key);
+                if (key[0] != 0x50 || key[1] != 0x4b || key[2] != 0x05) {
+                    continue;
+                }
+                /* get the file comment size */
+                byte[] tmp = new byte[18];
+                zipFile.readFully(tmp);
+                int commentSize = (tmp[16] &amp; 0xff)
+                        | ((tmp[17] &amp; 0xff) &lt;&lt; 8);
+                System.out.println(&quot;&quot; + commentSize);
+                if (commentSize &gt; 0) {
+                    byte[] comment = new byte[commentSize];
+                    zipFile.readFully(comment);
+                    String commentStr = new String(comment, &quot;UTF-8&quot;);
+                    JSONObject json = new JSONObject(commentStr);
+                    SYMBOL = json.getString(&quot;channelId&quot;);
+                }
+                break;
+            }
+        }
+    }catch(IOException e){//读写EOCD出错，默认设置没有EOCD字段
+        e.printStackTrace();
+        //这里应该加入读取META-INF下空文件渠道标识的逻辑
+        if（读取到空文件标识）{
+            SYMBOL = &quot;空文件标识&quot;
+        }else{
+            SYMBOL = &quot;&quot;;
+        }
+    }catch (JSONException e) {//有EOCD字段，但是没有channelId
+        e.printStackTrace();
+        SYMBOL = &quot;&quot;;
+    }  finally {
+        if (zipFile != null) {
+            try {
+                zipFile.close();
+            } catch (IOException ex) {
+            }
+        }
+    }
+}
+</code></pre><p>注意，这里在没有读到EOCD（即zip的comment字段）时，应该是会读取META-INF目录下时候存在空的标识渠道文件，这里没有做演示，读者可以自行补充。</p>
+<p><a href="http://tech.meituan.com/mt-apk-packaging.html" target="_blank" rel="external">github上的源码和本地工具</a></p>
 
       
     </div>
@@ -266,13 +345,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/09/03/Hexo搭建优化部署/">Hexo搭建优化部署</a></p>
+        <p><span>本文标题:</span><a href="/2016/11/06/Android多渠道包处理/">Android多渠道包处理</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 hellokugo 的个人博客">hellokugo</a></p>
-        <p><span>发布时间:</span>2016年09月03日 - 22时56分</p>
-        <p><span>最后更新:</span>2016年09月10日 - 12时52分</p>
+        <p><span>发布时间:</span>2016年11月06日 - 02时20分</p>
+        <p><span>最后更新:</span>2016年11月06日 - 02时21分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/09/03/Hexo搭建优化部署/" title="Hexo搭建优化部署">https://hellokugo.github.io/2016/09/03/Hexo搭建优化部署/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://hellokugo.github.io/2016/09/03/Hexo搭建优化部署/　　作者: hellokugo" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/11/06/Android多渠道包处理/" title="Android多渠道包处理">https://hellokugo.github.io/2016/11/06/Android多渠道包处理/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://hellokugo.github.io/2016/11/06/Android多渠道包处理/　　作者: hellokugo" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -285,18 +364,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2016/09/10/优化动态加载方案/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          优化动态加载方案
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/09/03/简析DroidPlugin之Hook/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">简析DroidPlugin之Hook</div>
+    <a href="/2016/10/30/65536问题生成多dex处理/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">65536问题生成多dex处理</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -307,7 +377,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#概要说明"><span class="toc-number">2.</span> <span class="toc-text">概要说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#搭建流程"><span class="toc-number">3.</span> <span class="toc-text">搭建流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最后"><span class="toc-number">4.</span> <span class="toc-text">最后</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#使用说明"><span class="toc-number">1.</span> <span class="toc-text">使用说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#处理方案"><span class="toc-number">2.</span> <span class="toc-text">处理方案</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#思路"><span class="toc-number">3.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现"><span class="toc-number">4.</span> <span class="toc-text">实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#最终界面"><span class="toc-number">4.1.</span> <span class="toc-text">最终界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写入渠道信息"><span class="toc-number">4.2.</span> <span class="toc-text">写入渠道信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看渠道信息"><span class="toc-number">4.3.</span> <span class="toc-text">查看渠道信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#java读取渠道信息"><span class="toc-number">4.4.</span> <span class="toc-text">java读取渠道信息</span></a></li></ol></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -343,7 +413,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/09/03/Hexo搭建优化部署/" data-title="Hexo搭建优化部署" data-url="https://hellokugo.github.io/2016/09/03/Hexo搭建优化部署/"></div>
+    <div class="ds-thread" data-thread-key="2016/11/06/Android多渠道包处理/" data-title="Android多渠道包处理" data-url="https://hellokugo.github.io/2016/11/06/Android多渠道包处理/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -366,13 +436,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/09/10/优化动态加载方案/" title="上一篇: 优化动态加载方案">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2016/09/03/简析DroidPlugin之Hook/" title="下一篇: 简析DroidPlugin之Hook">
+            <a href="/2016/10/30/65536问题生成多dex处理/" title="下一篇: 65536问题生成多dex处理">
                 <i class="fa fa-angle-right"></i>
             </a>
         

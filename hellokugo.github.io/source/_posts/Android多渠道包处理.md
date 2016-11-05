@@ -133,5 +133,5 @@ tags:
 
 注意，这里在没有读到EOCD（即zip的comment字段）时，应该是会读取META-INF目录下时候存在空的标识渠道文件，这里没有做演示，读者可以自行补充。
 
-[github上的源码和本地工具](http://tech.meituan.com/mt-apk-packaging.html)
+[github上的源码和本地工具](https://github.com/hellokugo/packageMultiChannel)
 

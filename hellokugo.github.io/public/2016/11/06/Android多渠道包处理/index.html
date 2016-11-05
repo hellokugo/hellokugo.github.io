@@ -13,7 +13,7 @@
 <meta property="og:description" content="使用说明众所周知，Android会在不同的应用市场或者渠道去发布自己的产品，然后根据不同渠道的反馈去做相应产品的后续版本。目前用得比较多的是像集成友盟在AndroidManifest的meta-data加入渠道信息然后在代码读取，我们前期业务的做法是打包过程中在assets目录下加入标识文件记录渠道信息，由于这样的做法是在apk签名前插入，换言之每处理一个渠道就要做一次签名打包的操作，如果处理多个">
 <meta property="og:image" content="http://i.imgur.com/H5AkBcn.png">
 <meta property="og:image" content="http://i.imgur.com/muTxwrF.png">
-<meta property="og:updated_time" content="2016-11-05T18:21:48.571Z">
+<meta property="og:updated_time" content="2016-11-05T18:27:04.658Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android多渠道包处理">
 <meta name="twitter:description" content="使用说明众所周知，Android会在不同的应用市场或者渠道去发布自己的产品，然后根据不同渠道的反馈去做相应产品的后续版本。目前用得比较多的是像集成友盟在AndroidManifest的meta-data加入渠道信息然后在代码读取，我们前期业务的做法是打包过程中在assets目录下加入标识文件记录渠道信息，由于这样的做法是在apk签名前插入，换言之每处理一个渠道就要做一次签名打包的操作，如果处理多个">
@@ -336,7 +336,7 @@
     }
 }
 </code></pre><p>注意，这里在没有读到EOCD（即zip的comment字段）时，应该是会读取META-INF目录下时候存在空的标识渠道文件，这里没有做演示，读者可以自行补充。</p>
-<p><a href="http://tech.meituan.com/mt-apk-packaging.html" target="_blank" rel="external">github上的源码和本地工具</a></p>
+<p><a href="https://github.com/hellokugo/packageMultiChannel" target="_blank" rel="external">github上的源码和本地工具</a></p>
 
       
     </div>
@@ -348,7 +348,7 @@
         <p><span>本文标题:</span><a href="/2016/11/06/Android多渠道包处理/">Android多渠道包处理</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 hellokugo 的个人博客">hellokugo</a></p>
         <p><span>发布时间:</span>2016年11月06日 - 02时20分</p>
-        <p><span>最后更新:</span>2016年11月06日 - 02时21分</p>
+        <p><span>最后更新:</span>2016年11月06日 - 02时27分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/11/06/Android多渠道包处理/" title="Android多渠道包处理">https://hellokugo.github.io/2016/11/06/Android多渠道包处理/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hellokugo.github.io/2016/11/06/Android多渠道包处理/　　作者: hellokugo" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>

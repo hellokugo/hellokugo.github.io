@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://i.imgur.com/FFynHi2.png">
 <meta property="og:image" content="http://i.imgur.com/wr9Ii0c.png">
 <meta property="og:image" content="http://i.imgur.com/roV1hbC.png">
-<meta property="og:updated_time" content="2016-10-30T09:20:06.303Z">
+<meta property="og:updated_time" content="2016-10-30T14:00:13.038Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="65536问题生成多dex处理">
 <meta name="twitter:description" content="需求背景目前Android在处理65536的问题上提出了很多解决方案，google官方介绍的在Android studio上分dex开关控制是很多项目的首选，但这是基于源代码编译过程中去处理（或者说，在分完多dex后就是最终的apk包）。这里要说的一种业务场景，是提供一种方便接入第三方sdk平台的65536处理，区别于一次打包即可生成最终apk，这里是针对源apk（可以理解为通过开发工具打出的不接">
@@ -245,7 +245,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h1><p>目前Android在处理65536的问题上提出了很多解决方案，google官方介绍的在Android studio上分dex开关控制是很多项目的首选，但这是基于源代码编译过程中去处理（或者说，在分完多dex后就是最终的apk包）。这里要说的一种业务场景，是提供一种方便接入第三方sdk平台的65536处理，区别于一次打包即可生成最终apk，这里是针对源apk（可以理解为通过开发工具打出的不接入任何三方sdk的可运行apk）通过选择不同接入第三方sdk二次编译打包而生成最终的apk场景。具体来说，就是通过对源apk的反编译生成的smali文件，和通过约定规范接口接入的第三方sdk反编译smali文件结合，再通过对smali文件回编生成一个最终apk的过程。当然了，中间涉及包括资源和AndroidManifest等一些处理，这里不展开细说，因为65536问题主要是代码层面的处理。</p>
+        <h1 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h1><p>目前Android在处理65536的问题上提出了很多解决方案，google官方介绍的在Android studio上分dex开关控制是很多项目的首选，但这是基于源代码编译过程中去处理（或者说，在分完多dex后就是最终的apk包）。这里要说的一种业务场景，是提供一种方便接入第三方sdk平台的65536处理，区别于一次打包即可生成最终apk，这里是针对源apk（可以理解为通过开发工具打出的不接入任何三方sdk的可运行apk）通过选择不同接入第三方sdk二次编译打包而生成最终的apk场景。<a id="more"></a>具体来说，就是通过对源apk的反编译生成的smali文件，和通过约定规范接口接入的第三方sdk反编译smali文件结合，再通过对smali文件回编生成一个最终apk的过程。当然了，中间涉及包括资源和AndroidManifest等一些处理，这里不展开细说，因为65536问题主要是代码层面的处理。</p>
 <h1 id="处理方案"><a href="#处理方案" class="headerlink" title="处理方案"></a>处理方案</h1><p>上述场景就不像Android studio提供的开关这么好处理了，因为即使上传的源apk方法数不超过65535，在合并第三方sdk的smali后难免会超过这个阈值，像接入单一个360这种sdk就已经有4w+的方法，这样回编肯定是不成功，这种场景下目前是没有很好的解决方案。业务初期提供了动态加载方案，即把接入多出的第三方sdk（像这里的360sdk）抽出dex动态加载，其他资源等处理不作改变，这样确实可以保证运行成功，而且启动速度也不会造成明显的影响。本以为这种方案可以后续推广，在接入360后提审返回结果竟然是不通过，原因在于360会检查我们的接入包是含有其代码文件，这就蛋疼了，因为我们把他们的代码都用作动态加载，反编译的包肯定是没有他们的代码文件。没想到还会有这种情况，这就让我们重新审视思考，能不能在现有的合并smali接入过程中做到像Android studio一样分dex？答案当然是可以。</p>
 <h1 id="道路是曲折的"><a href="#道路是曲折的" class="headerlink" title="道路是曲折的"></a>道路是曲折的</h1><h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>既然要在不影响整个接入打包流程做出改变，就必须思考几个问题：</p>
 <ol>
@@ -291,7 +291,7 @@
         <p><span>本文标题:</span><a href="/2016/10/30/65536问题生成多dex处理/">65536问题生成多dex处理</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 hellokugo 的个人博客">hellokugo</a></p>
         <p><span>发布时间:</span>2016年10月30日 - 17时09分</p>
-        <p><span>最后更新:</span>2016年10月30日 - 17时20分</p>
+        <p><span>最后更新:</span>2016年10月30日 - 22时00分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/10/30/65536问题生成多dex处理/" title="65536问题生成多dex处理">https://hellokugo.github.io/2016/10/30/65536问题生成多dex处理/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hellokugo.github.io/2016/10/30/65536问题生成多dex处理/　　作者: hellokugo" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>

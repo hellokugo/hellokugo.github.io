@@ -22,9 +22,9 @@ tags:
 
 ## 最终界面
 
-![](http://i.imgur.com/H5AkBcn.png)
+![](http://i.imgur.com/CI6KNco.png)
 
-![](http://i.imgur.com/muTxwrF.png)
+![](http://i.imgur.com/wyepQoT.png)
 
 整体而言，操作的界面还是比较简单的，主要是两个tab：第一个是查看渠道信息，这里面首先读取comment字段，没有渠道信息则读取META-INF目录下的标识渠道的空文件，如果也没有则友好提示；第二个是打渠道的tab，可以看到有一个Extra可选填入操作，这个字段是供业务扩展字段，可以为空，实现的规则也是comment和空文件标识同时写入，当然，channel是可填入多个渠道标识实现打包。
 

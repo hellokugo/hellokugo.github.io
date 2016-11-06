@@ -13,7 +13,7 @@
 <meta property="og:description" content="使用说明众所周知，Android会在不同的应用市场或者渠道去发布自己的产品，然后根据不同渠道的反馈去做相应产品的后续版本。目前用得比较多的是像集成友盟在AndroidManifest的meta-data加入渠道信息然后在代码读取，我们前期业务的做法是打包过程中在assets目录下加入标识文件记录渠道信息，由于这样的做法是在apk签名前插入，换言之每处理一个渠道就要做一次签名打包的操作，如果处理多个">
 <meta property="og:image" content="http://i.imgur.com/H5AkBcn.png">
 <meta property="og:image" content="http://i.imgur.com/muTxwrF.png">
-<meta property="og:updated_time" content="2016-11-05T18:27:04.658Z">
+<meta property="og:updated_time" content="2016-11-05T18:29:09.419Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android多渠道包处理">
 <meta name="twitter:description" content="使用说明众所周知，Android会在不同的应用市场或者渠道去发布自己的产品，然后根据不同渠道的反馈去做相应产品的后续版本。目前用得比较多的是像集成友盟在AndroidManifest的meta-data加入渠道信息然后在代码读取，我们前期业务的做法是打包过程中在assets目录下加入标识文件记录渠道信息，由于这样的做法是在apk签名前插入，换言之每处理一个渠道就要做一次签名打包的操作，如果处理多个">
@@ -240,7 +240,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h1><p>众所周知，Android会在不同的应用市场或者渠道去发布自己的产品，然后根据不同渠道的反馈去做相应产品的后续版本。目前用得比较多的是像集成友盟在AndroidManifest的meta-data加入渠道信息然后在代码读取，我们前期业务的做法是打包过程中在assets目录下加入标识文件记录渠道信息，由于这样的做法是在apk签名前插入，换言之每处理一个渠道就要做一次签名打包的操作，如果处理多个渠道消耗的时间就需要非常长，这样的大前提下就要思考是否有更好的打渠道方式。</p>
+        <h1 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h1><p>众所周知，Android会在不同的应用市场或者渠道去发布自己的产品，然后根据不同渠道的反馈去做相应产品的后续版本。目前用得比较多的是像集成友盟在AndroidManifest的meta-data加入渠道信息然后在代码读取，我们前期业务的做法是打包过程中在assets目录下加入标识文件记录渠道信息，由于这样的做法是在apk签名前插入，换言之每处理一个渠道就要做一次签名打包的操作，如果处理多个渠道消耗的时间就需要非常长，这样的大前提下就要思考是否有更好的打渠道方式。<a id="more"></a></p>
 <h1 id="处理方案"><a href="#处理方案" class="headerlink" title="处理方案"></a>处理方案</h1><p>我们知道，apk其实就是一个zip格式的文件。在 <a href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT" target="_blank" rel="external">zip格式介绍</a>中我们发现，zip留给我们一个可扩展的comment字段，这个字段的添加修改并不会影响签名后的apk包。换言之，以往我们在打多渠道的时候是每打一个渠道就要签名一个apk，现在用这种方式可以是实现签名一个apk来打多个渠道包，而且这些apk包并不影响原本的签名，这样所消耗的时间肯定会大大减少。后续发现github上有人提供这个打包方式，大概的思路和<a href="https://github.com/mcxiaoke/packer-ng-plugin" target="_blank" rel="external">packer-ng-plugin</a> 是一致的，区别在于考虑到业务打渠道的时机基本是在第三方提审过后签名apk才打入，这时候尽可能让打渠道的工作交由相应的运营，所以做出一个可操作简单友好的“傻瓜式”GUI，方便任何人都可以参与这项工作。</p>
 <h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>这里要说明下，打渠道是用python语言，并且通过编写pyqt来实现界面化；读取渠道信息是在java语言层面，具体是直接读zip的字节码来获取。还有一点是，测试过程中发现通过zip comment打渠道方式在有的时候没有通过对apk重签名（apk重新签名会把这个字段抹去）也会出现读取不到渠道信息的情况，这样为了尽可能避免这种情况出现，我们参考了 <a href="http://tech.meituan.com/mt-apk-packaging.html" target="_blank" rel="external">美团Android自动化之旅—生成渠道包</a>，在签名后的apk插入空的META-INF/channel_file.txt做了规避处理，防止zip被破坏了导致渠道信息丢失而读取不到的问题。当然了，美团这种处理方案在apk重签名后也是会导致渠道信息丢失的问题。</p>
 <h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="最终界面"><a href="#最终界面" class="headerlink" title="最终界面"></a>最终界面</h2><p><img src="http://i.imgur.com/H5AkBcn.png" alt=""></p>
@@ -348,7 +348,7 @@
         <p><span>本文标题:</span><a href="/2016/11/06/Android多渠道包处理/">Android多渠道包处理</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 hellokugo 的个人博客">hellokugo</a></p>
         <p><span>发布时间:</span>2016年11月06日 - 02时20分</p>
-        <p><span>最后更新:</span>2016年11月06日 - 02时27分</p>
+        <p><span>最后更新:</span>2016年11月06日 - 02时29分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/11/06/Android多渠道包处理/" title="Android多渠道包处理">https://hellokugo.github.io/2016/11/06/Android多渠道包处理/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hellokugo.github.io/2016/11/06/Android多渠道包处理/　　作者: hellokugo" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>

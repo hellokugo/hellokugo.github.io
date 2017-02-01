@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>MQTT源码解析之connect | hellokugo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="说在前面前段时间项目组在搞 IM，前期主要是对当前IM类似QQ、微信和环信等通信协议的采用分析，基本确定是在XMPP和MQTT二者选一。XMPP应用较为广泛稳定，但是如果应用在移动端实在是折腾不起，流量大，自然耗电量也会多。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MQTT源码解析之connect">
+<meta property="og:url" content="https://hellokugo.github.io/2016/12/20/MQTT源码解析之connect/index.html">
+<meta property="og:site_name" content="hellokugo">
+<meta property="og:description" content="说在前面前段时间项目组在搞 IM，前期主要是对当前IM类似QQ、微信和环信等通信协议的采用分析，基本确定是在XMPP和MQTT二者选一。XMPP应用较为广泛稳定，但是如果应用在移动端实在是折腾不起，流量大，自然耗电量也会多。">
+<meta property="og:image" content="http://i.imgur.com/mXz6h2H.png">
+<meta property="og:image" content="http://i.imgur.com/WzEHxZO.png">
+<meta property="og:image" content="http://i.imgur.com/RJIgpES.png">
+<meta property="og:image" content="http://i.imgur.com/WlIsDzx.png">
+<meta property="og:image" content="http://i.imgur.com/NNDEpwq.png">
+<meta property="og:image" content="http://i.imgur.com/IKUDaul.png">
+<meta property="og:image" content="http://i.imgur.com/OXZzldo.png">
+<meta property="og:image" content="http://i.imgur.com/03bxLCO.png">
+<meta property="og:image" content="http://i.imgur.com/b4rdqKi.png">
+<meta property="og:image" content="http://i.imgur.com/ynGryag.png">
+<meta property="og:image" content="http://i.imgur.com/3cevn7V.png">
+<meta property="og:image" content="http://i.imgur.com/ucJCDSt.png">
+<meta property="og:image" content="http://i.imgur.com/ujIbCD6.png">
+<meta property="og:image" content="http://i.imgur.com/lb0DTw3.png">
+<meta property="og:image" content="http://i.imgur.com/bG7FV1c.png">
+<meta property="og:image" content="http://i.imgur.com/nc5mpmS.png">
+<meta property="og:image" content="http://i.imgur.com/Agf4Pis.png">
+<meta property="og:image" content="http://i.imgur.com/UbJIeJv.png">
+<meta property="og:image" content="http://i.imgur.com/CzzhoTL.png">
+<meta property="og:image" content="http://i.imgur.com/rEuV1ov.png">
+<meta property="og:image" content="http://i.imgur.com/TVppG3e.png">
+<meta property="og:image" content="http://i.imgur.com/FQSP8Nf.png">
+<meta property="og:image" content="http://i.imgur.com/iEmslY9.png">
+<meta property="og:image" content="http://i.imgur.com/pbVUvhD.png">
+<meta property="og:image" content="http://i.imgur.com/58Q2QiK.png">
+<meta property="og:image" content="http://i.imgur.com/irBkubN.png">
+<meta property="og:image" content="http://i.imgur.com/BfpZpiu.png">
+<meta property="og:image" content="http://i.imgur.com/5gCV2MN.png">
+<meta property="og:updated_time" content="2016-12-20T12:39:37.042Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MQTT源码解析之connect">
+<meta name="twitter:description" content="说在前面前段时间项目组在搞 IM，前期主要是对当前IM类似QQ、微信和环信等通信协议的采用分析，基本确定是在XMPP和MQTT二者选一。XMPP应用较为广泛稳定，但是如果应用在移动端实在是折腾不起，流量大，自然耗电量也会多。">
+<meta name="twitter:image" content="http://i.imgur.com/mXz6h2H.png">
+  
+    <link rel="alternative" href="/atom.xml" title="hellokugo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/head.jpg">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: true
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/">hellokugo</a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=ocbF1NWM1cvLyM-h0NCPws7M" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/hellokugo" title="github">github</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/Android，MQTT/" style="font-size: 10px;">Android，MQTT</a> <a href="/tags/Android，Tinker/" style="font-size: 10px;">Android，Tinker</a> <a href="/tags/Android，多dex，65536/" style="font-size: 10px;">Android，多dex，65536</a> <a href="/tags/Android，，多渠道，pyqt/" style="font-size: 10px;">Android，，多渠道，pyqt</a> <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/other/" style="font-size: 10px;">other</a> <a href="/tags/python/" style="font-size: 10px;">python</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://cstsinghua.github.io/">cstsinghua</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://haiolv.github.io/">haiolv</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://aso210.github.io/">aso</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">Less is More.</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">hellokugo</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">hellokugo</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=ocbF1NWM1cvLyM-h0NCPws7M" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/hellokugo" title="github">github</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-MQTT源码解析之connect" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/20/MQTT源码解析之connect/" class="article-date">
+      <time datetime="2016-12-20T12:40:22.662Z" itemprop="datePublished">2016-12-20</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MQTT源码解析之connect
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android，MQTT/">Android，MQTT</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h1><p>前段时间项目组在搞 <a href="http://blog.csdn.net/DreamTww/article/details/4632174" target="_blank" rel="external">IM</a>，前期主要是对当前IM类似QQ、微信和环信等通信协议的采用分析，基本确定是在XMPP和MQTT二者选一。XMPP应用较为广泛稳定，但是如果应用在移动端实在是折腾不起，流量大，自然耗电量也会多。<a id="more"></a>相比之下，初衷使用在推送方面的MQTT协议简直是为移动端的痛点应运而生。 <a href="http://xiangwangfeng.com/2015/05/20/%E7%A7%BB%E5%8A%A8IM%E5%BC%80%E5%8F%91%E9%82%A3%E4%BA%9B%E4%BA%8B/" target="_blank" rel="external">参考</a></p>
+<h1 id="说些什么"><a href="#说些什么" class="headerlink" title="说些什么"></a>说些什么</h1><p>本文不是要详细展开对MQTT协议的解析，而是主要从github上的 <a href="https://github.com/sandro-k/org.eclipse.paho.android.service.sample" target="_blank" rel="external">paho demo</a> 来对MQTT内部实现connect进行流程的梳理，结合其 <a href="http://public.dhe.ibm.com/software/dw/webservices/ws-mqtt/mqtt-v3r1.html" target="_blank" rel="external">官方文档</a> 对协议格式的了解，相信读者能拨开云雾，了解其实现机制。另外，推荐下国人对MQTT理解写的 <a href="http://www.blogjava.net/yongboy/category/54835.html" target="_blank" rel="external">系列文章</a>。注意的是，要跑起demo需要搭建测试服务器作订阅发送，建议采用mosquitto作连接服务端供本地测试， <a href="https://code.google.com/archive/p/mosquitto-mqtt-client-android/" target="_blank" rel="external">参考地址</a></p>
+<h1 id="Read-Code"><a href="#Read-Code" class="headerlink" title="Read Code"></a>Read Code</h1><h2 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h2><p>假如demo能成功在手机端跑起，并且开启mosquitto，开始介绍其connect流程，跟进代码到ClientConnections类中的connectAction方法：</p>
+<p><img src="http://i.imgur.com/mXz6h2H.png" alt=""></p>
+<p>获取到新建连接的cid、uri和port信息，注意，这里是用本地的mosquitto作测试连接，所以uri通过ipconfig获取到的ip地址填入，port默认是1883（当然，你可以作修改），cid可以随意。</p>
+<p>其中还有其他一些参数（诸如ssl、qos和keepalive等）由于本篇主要介绍的是conncet所以不展开细说。ok，接着往下看：</p>
+<p><img src="http://i.imgur.com/WzEHxZO.png" alt=""></p>
+<p><img src="http://i.imgur.com/RJIgpES.png" alt=""></p>
+<p>这里要对回调进行区分，以上截图第一个回调MqttCallbackHandler主要是接收服务端push过来的信息回调；而下图的callback继承于ActionListener，顾名思义，是发起本次“动作”的回调结果，连接是一个动作，订阅是一个动作，客户端push信息也是一个动作，每次动作的发起都会注册回调返回结果。区分好上述两个回调后，开始走进connect操作的核心。</p>
+<h2 id="MqttService"><a href="#MqttService" class="headerlink" title="MqttService"></a>MqttService</h2><p>connect前还需要做一个操作，就是区分每一次连接，这里是用MqttTokenAndroid来保存当前连接的callback。我们知道，连接过程的时间并不是我们所能控制的，所以这里开启了一个service来进行后面的操作。这里需要说明一点的是，在startService后进入到MqttService的onStartCommand方法中，注册了一个广播：</p>
+<p><img src="http://i.imgur.com/WlIsDzx.png" alt=""></p>
+<p>该广播主要是检测手机网络的变化而进行重连或断开连接的提示操作。ok，在开启startService和bindService后注册了另外一个广播：</p>
+<p><img src="http://i.imgur.com/NNDEpwq.png" alt=""></p>
+<p>这个广播至关重要，因为它是接收服务端信息的桥梁，action是MqttServiceConstants.CALLBACK_TO_ACTIVITY，在后面会用到。</p>
+<h2 id="connect"><a href="#connect" class="headerlink" title="connect"></a>connect</h2><p>连接service成功后回调至onServiceConnected中做doConnect()方法，跟进代码，有这样一句：</p>
+<p><img src="http://i.imgur.com/IKUDaul.png" alt=""></p>
+<p>这里巧妙地用一个以递增num作key、token作value的map来保存映射每次的连接操作。之后做mqttService.connect()。</p>
+<p>跟到MqttConnection的connect方法，设置一个回调的bundle，action指定为CONNECT_ACTION，并把传进来的token带上，这里多设置了一层代理的IMqttActionListener，把上述设置的bundle带上。然后就new出一个MqttAsyncClient，并绑定上述设置的IMqttActionListener作为回调，然后再做connect()。</p>
+<h2 id="tcp-ssl"><a href="#tcp-ssl" class="headerlink" title="tcp / ssl"></a>tcp / ssl</h2><p>跟进MqttAsyncClient类中的connect()方法，在进行一系列的当前连接状态判断之后，有以下一句代码：</p>
+<p><img src="http://i.imgur.com/OXZzldo.png" alt=""></p>
+<p>这里面是干嘛的呢？跟进去看下：</p>
+<p><img src="http://i.imgur.com/03bxLCO.png" alt=""></p>
+<p>原来是设置不同连接的端口和uri地址，这里是根据connect前是否设置ssl安全访问模式去设定的，默认ssl为false，即tcp连接。</p>
+<h2 id="connect-protocol-infomation"><a href="#connect-protocol-infomation" class="headerlink" title="connect protocol infomation"></a>connect protocol infomation</h2><p>跟到这里，发现复杂的代码总是设置各种代码和多层回调，给人雾里看花的感觉，也许这就是设计模式的魅力。别急，接着往下看，跟到ClientComms类的connect()方法。看到这里：</p>
+<p><img src="http://i.imgur.com/b4rdqKi.png" alt=""></p>
+<p>在MqttConnect的构造方法中第一句代码是 </p>
+<pre><code>super(MqttWireMessage.MESSAGE_TYPE_CONNECT);
+</code></pre><p>终于看到设置connect协议的地方了，为什么这么说？了解mqtt头部信息的读者应该对以下的图并不陌生：</p>
+<p><img src="http://i.imgur.com/ynGryag.png" alt=""></p>
+<p>要想进一步了解connect协议字段，可以参考文章开篇推荐的国人总结的系列文章中有提及到。 <a href="http://www.blogjava.net/yongboy/archive/2014/02/09/409630.html" target="_blank" rel="external">送上链接</a></p>
+<h2 id="connect-Thread"><a href="#connect-Thread" class="headerlink" title="connect Thread"></a>connect Thread</h2><p>看到设置connect协议了，应该离真正连接的代码不远了。继续往下看：</p>
+<p><img src="http://i.imgur.com/3cevn7V.png" alt=""></p>
+<p>咦，这里开了一个线程，干嘛的呢？看下ConnectBG的run()方法：</p>
+<p><img src="http://i.imgur.com/ucJCDSt.png" alt=""></p>
+<p>接下来，打算分三部分来介绍。</p>
+<h3 id="socket"><a href="#socket" class="headerlink" title="socket"></a>socket</h3><p>NetworkModule是一个接口，真正实现的是在上述tcp/ssl介绍部分的TCPNetworkModule/LocalNetworkModule。这里以TCPNetworkModule为例，上代码：</p>
+<p><img src="http://i.imgur.com/ujIbCD6.png" alt=""></p>
+<p>哎呀，原来是用到socket连接，这下终于看到真面目了。这一步是打开了socket。</p>
+<h3 id="run-Threads"><a href="#run-Threads" class="headerlink" title="run Threads"></a>run Threads</h3><p>网络连接了，必然是开始数据的发送和接收处理。果不其然，接下来看到的是三个线程，分别是CommsReceiver、CommsSender和CommsCallback。<br>下面直接看下这三个线程的run方法：</p>
+<p><strong><em>CommsReceiver</em></strong>：</p>
+<p><img src="http://i.imgur.com/lb0DTw3.png" alt=""></p>
+<p>该线程用 in.available() &gt; 0 处理接收消息，如果没有接收到消息则一直处于阻塞状态；</p>
+<p><strong><em>CommsSender</em></strong>：</p>
+<p><img src="http://i.imgur.com/bG7FV1c.png" alt=""></p>
+<p>通过clientState.get()获取到发送消息，点进去get()方法看下：</p>
+<p><img src="http://i.imgur.com/nc5mpmS.png" alt=""></p>
+<p>这里定义pendingMessages和pendingFlows两个容器来处理不同的发送消息类型，并释放queueLock锁，queueLock.wait()一直阻塞等待被唤起。</p>
+<p><strong><em>CommsCallback</em></strong>：</p>
+<p><img src="http://i.imgur.com/Agf4Pis.png" alt=""></p>
+<p>和CommsSender类似，通过释放workAvailable锁，workAvailable.wait()一直阻塞等待被唤起。</p>
+<h3 id="send-connect-request"><a href="#send-connect-request" class="headerlink" title="send connect request"></a>send connect request</h3><p>看到上面介绍的三个线程均是阻塞状，接下来肯定是需要唤醒某个线程做发送操作了。跟进internalSend()方法：</p>
+<p><img src="http://i.imgur.com/UbJIeJv.png" alt=""></p>
+<p>看到这一步验证了我们的猜想，被唤起的是CommsSender这个线程：</p>
+<p><img src="http://i.imgur.com/CzzhoTL.png" alt=""></p>
+<p>最终通过out.write()和out.flush()把connect消息发送出去。</p>
+<h2 id="receive-connectAck"><a href="#receive-connectAck" class="headerlink" title="receive connectAck"></a>receive connectAck</h2><p>把coneect消息发送出去只是成功一半，接收到服务端的connectAck才算是connect成功。So，服务端发送过来的消息在哪里接收呢？CommsReceiver在获取到消息则不在阻塞，第一步先解析获取到数据类型：</p>
+<p><img src="http://i.imgur.com/rEuV1ov.png" alt=""></p>
+<p>如果阅读过推荐的解析MQTT协议文章的读者在这里应该理解不难，跟进createWireMessage()方法，由于收到的是connectAck，所以会走到这里：</p>
+<p><img src="http://i.imgur.com/TVppG3e.png" alt=""></p>
+<p>建立并返回的是一个MqttAck对象。继续返回到CommsReceiver：</p>
+<p><img src="http://i.imgur.com/FQSP8Nf.png" alt=""></p>
+<p>跟进clientState.notifyReceivedAck((MqttAck)message)，走到这里：</p>
+<p><img src="http://i.imgur.com/iEmslY9.png" alt=""></p>
+<p>获取rc状态码，等于0则会成功，这里面connected()方法是一个关键，主要是做心跳连接，这个后面再细讲；跟进notifyResult() 方法：</p>
+<p><img src="http://i.imgur.com/pbVUvhD.png" alt=""></p>
+<p><img src="http://i.imgur.com/58Q2QiK.png" alt=""></p>
+<p>哎呀，跟到最后，原来是为了唤醒CommsCallback这个线程。Then，跟到CommsCallback：</p>
+<p><img src="http://i.imgur.com/irBkubN.png" alt=""></p>
+<p>接着跟进去handleActionComplete()方法：</p>
+<p><img src="http://i.imgur.com/BfpZpiu.png" alt=""></p>
+<p><img src="http://i.imgur.com/5gCV2MN.png" alt=""></p>
+<p>至此，线程已经走完，剩下的就是之前设置下来的回调通知。这个相信读者可以自行往下阅读。</p>
+<h1 id="说到最后"><a href="#说到最后" class="headerlink" title="说到最后"></a>说到最后</h1><p>整个connect流程走下来还是很清晰可见的，后续会继续分析心跳ping、订阅和publish等流程，其实过程都是大同小异，都是基于以上三个线程去进行。所以，熟悉connect流程对之后的分析帮助很大。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/12/20/MQTT源码解析之connect/">MQTT源码解析之connect</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 hellokugo 的个人博客">hellokugo</a></p>
+        <p><span>发布时间:</span>2016年12月20日 - 20时40分</p>
+        <p><span>最后更新:</span>2016年12月20日 - 20时39分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/12/20/MQTT源码解析之connect/" title="MQTT源码解析之connect">https://hellokugo.github.io/2016/12/20/MQTT源码解析之connect/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://hellokugo.github.io/2016/12/20/MQTT源码解析之connect/　　作者: hellokugo" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2016/11/30/微信Tinker资源热修复解析/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">微信Tinker资源热修复解析</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#说在前面"><span class="toc-number">1.</span> <span class="toc-text">说在前面</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#说些什么"><span class="toc-number">2.</span> <span class="toc-text">说些什么</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Read-Code"><span class="toc-number">3.</span> <span class="toc-text">Read Code</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Prepare"><span class="toc-number">3.1.</span> <span class="toc-text">Prepare</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MqttService"><span class="toc-number">3.2.</span> <span class="toc-text">MqttService</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#connect"><span class="toc-number">3.3.</span> <span class="toc-text">connect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tcp-ssl"><span class="toc-number">3.4.</span> <span class="toc-text">tcp / ssl</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#connect-protocol-infomation"><span class="toc-number">3.5.</span> <span class="toc-text">connect protocol infomation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#connect-Thread"><span class="toc-number">3.6.</span> <span class="toc-text">connect Thread</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#socket"><span class="toc-number">3.6.1.</span> <span class="toc-text">socket</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#run-Threads"><span class="toc-number">3.6.2.</span> <span class="toc-text">run Threads</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#send-connect-request"><span class="toc-number">3.6.3.</span> <span class="toc-text">send connect request</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#receive-connectAck"><span class="toc-number">3.7.</span> <span class="toc-text">receive connectAck</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#说到最后"><span class="toc-number">4.</span> <span class="toc-text">说到最后</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2016/12/20/MQTT源码解析之connect/" data-title="MQTT源码解析之connect" data-url="https://hellokugo.github.io/2016/12/20/MQTT源码解析之connect/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"null"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = '/js/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2016/11/30/微信Tinker资源热修复解析/" title="下一篇: 微信Tinker资源热修复解析">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/12/20/MQTT源码解析之connect/">MQTT源码解析之connect</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/30/微信Tinker资源热修复解析/">微信Tinker资源热修复解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/06/Android多渠道包处理/">Android多渠道包处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/30/65536问题生成多dex处理/">65536问题生成多dex处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/python脚本实现图片压缩/">python脚本实现图片压缩</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/优化动态加载方案/">优化动态加载方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/Hexo搭建优化部署/">Hexo搭建优化部署</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/简析DroidPlugin之Hook/">简析DroidPlugin之Hook</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/简析Android组件安全/">简析Android组件安全</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/03/Resource.arsc文件格式/">Resource.arsc文件格式</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2016 hellokugo
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

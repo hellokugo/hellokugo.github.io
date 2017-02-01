@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>https://hellokugo.github.io/2016/12/20/MQTT%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bconnect/</loc>
+    <lastmod>2016-12-20T12:39:37.042Z</lastmod>
+    <data>
+        <display>
+        <title>MQTT源码解析之connect</title>
+        <pubTime>2016-12-20T12:40:22.662Z</pubTime>
+        
+        <tag>Android，MQTT</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="https://hellokugo.github.io/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://hellokugo.github.io/2016/11/30/%E5%BE%AE%E4%BF%A1Tinker%E8%B5%84%E6%BA%90%E7%83%AD%E4%BF%AE%E5%A4%8D%E8%A7%A3%E6%9E%90/</loc>
     <lastmod>2016-11-30T12:17:38.291Z</lastmod>
     <data>

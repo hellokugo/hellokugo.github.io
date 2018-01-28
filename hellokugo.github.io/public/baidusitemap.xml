@@ -3,20 +3,22 @@
 
 
     
+    
+    
   <url>
-    <loc>https://hellokugo.github.io/2016/12/20/MQTT%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bconnect/</loc>
-    <lastmod>2016-12-20T12:39:37.042Z</lastmod>
+    <loc>https://hellokugo.github.io/2018/01/28/%E7%AE%80%E6%9E%90DroidPlugin%E4%B9%8BHook/</loc>
+    <lastmod>2018-01-28T15:39:34.393Z</lastmod>
     <data>
         <display>
-        <title>MQTT源码解析之connect</title>
-        <pubTime>2016-12-20T12:40:22.662Z</pubTime>
+        <title>简析DroidPlugin之Hook</title>
+        <pubTime>2018-01-28T15:39:34.393Z</pubTime>
         
-        <tag>Android，MQTT</tag>
+        <tag>android</tag>
          
          
            
              
-              <breadCrumb title="Android" url="https://hellokugo.github.io/categories/Android/"/>
+              <breadCrumb title="Mobile" url="https://hellokugo.github.io/categories/Mobile/"/>
           
         </display>
     </data>
@@ -24,12 +26,32 @@
 
     
   <url>
-    <loc>https://hellokugo.github.io/2016/11/30/%E5%BE%AE%E4%BF%A1Tinker%E8%B5%84%E6%BA%90%E7%83%AD%E4%BF%AE%E5%A4%8D%E8%A7%A3%E6%9E%90/</loc>
-    <lastmod>2016-11-30T12:17:38.291Z</lastmod>
+    <loc>https://hellokugo.github.io/2018/01/28/%E7%AE%80%E6%9E%90Android%E7%BB%84%E4%BB%B6%E5%AE%89%E5%85%A8/</loc>
+    <lastmod>2018-01-28T15:39:34.393Z</lastmod>
+    <data>
+        <display>
+        <title>简析Android组件安全</title>
+        <pubTime>2018-01-28T15:39:34.393Z</pubTime>
+        
+        <tag>android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Mobile" url="https://hellokugo.github.io/categories/Mobile/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://hellokugo.github.io/2018/01/28/%E5%BE%AE%E4%BF%A1Tinker%E8%B5%84%E6%BA%90%E7%83%AD%E4%BF%AE%E5%A4%8D%E8%A7%A3%E6%9E%90/</loc>
+    <lastmod>2018-01-28T15:39:34.392Z</lastmod>
     <data>
         <display>
         <title>微信Tinker资源热修复解析</title>
-        <pubTime>2016-11-30T12:10:19.804Z</pubTime>
+        <pubTime>2018-01-28T15:39:34.392Z</pubTime>
         
         <tag>Android，Tinker</tag>
          
@@ -44,52 +66,12 @@
 
     
   <url>
-    <loc>https://hellokugo.github.io/2016/11/06/Android%E5%A4%9A%E6%B8%A0%E9%81%93%E5%8C%85%E5%A4%84%E7%90%86/</loc>
-    <lastmod>2016-11-06T03:29:41.147Z</lastmod>
-    <data>
-        <display>
-        <title>Android多渠道包处理</title>
-        <pubTime>2016-11-05T18:20:43.251Z</pubTime>
-        
-        <tag>Android，，多渠道，pyqt</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="https://hellokugo.github.io/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://hellokugo.github.io/2016/10/30/65536%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90%E5%A4%9Adex%E5%A4%84%E7%90%86/</loc>
-    <lastmod>2016-10-30T14:00:13.038Z</lastmod>
-    <data>
-        <display>
-        <title>65536问题生成多dex处理</title>
-        <pubTime>2016-10-30T09:09:20.650Z</pubTime>
-        
-        <tag>Android，多dex，65536</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="https://hellokugo.github.io/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://hellokugo.github.io/2016/09/10/%E4%BC%98%E5%8C%96%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%96%B9%E6%A1%88/</loc>
-    <lastmod>2016-09-10T08:10:51.272Z</lastmod>
+    <loc>https://hellokugo.github.io/2018/01/28/%E4%BC%98%E5%8C%96%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%96%B9%E6%A1%88/</loc>
+    <lastmod>2018-01-28T15:39:34.392Z</lastmod>
     <data>
         <display>
         <title>优化动态加载方案</title>
-        <pubTime>2016-09-10T04:47:22.685Z</pubTime>
+        <pubTime>2018-01-28T15:39:34.392Z</pubTime>
         
         <tag>android</tag>
          
@@ -104,12 +86,32 @@
 
     
   <url>
-    <loc>https://hellokugo.github.io/2016/09/10/python%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/</loc>
-    <lastmod>2016-09-10T08:10:27.324Z</lastmod>
+    <loc>https://hellokugo.github.io/2018/01/28/Resource.arsc%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/</loc>
+    <lastmod>2018-01-28T15:39:34.391Z</lastmod>
+    <data>
+        <display>
+        <title>Resource.arsc文件格式</title>
+        <pubTime>2018-01-28T15:39:34.391Z</pubTime>
+        
+        <tag>android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Mobile" url="https://hellokugo.github.io/categories/Mobile/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://hellokugo.github.io/2018/01/28/python%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/</loc>
+    <lastmod>2018-01-28T15:39:34.391Z</lastmod>
     <data>
         <display>
         <title>python脚本实现图片压缩</title>
-        <pubTime>2016-09-10T05:30:22.150Z</pubTime>
+        <pubTime>2018-01-28T15:39:34.391Z</pubTime>
         
         <tag>python</tag>
          
@@ -124,19 +126,19 @@
 
     
   <url>
-    <loc>https://hellokugo.github.io/2016/09/03/Resource.arsc%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/</loc>
-    <lastmod>2016-09-10T04:52:47.484Z</lastmod>
+    <loc>https://hellokugo.github.io/2018/01/28/MQTT%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8B%E5%BF%83%E8%B7%B3ping/</loc>
+    <lastmod>2018-01-28T15:39:34.391Z</lastmod>
     <data>
         <display>
-        <title>Resource.arsc文件格式</title>
-        <pubTime>2016-09-03T13:58:46.737Z</pubTime>
+        <title>MQTT源码解析之心跳ping</title>
+        <pubTime>2018-01-28T15:39:34.391Z</pubTime>
         
-        <tag>android</tag>
+        <tag>Android，MQTT，ping</tag>
          
          
            
              
-              <breadCrumb title="Mobile" url="https://hellokugo.github.io/categories/Mobile/"/>
+              <breadCrumb title="Android" url="https://hellokugo.github.io/categories/Android/"/>
           
         </display>
     </data>
@@ -144,12 +146,12 @@
 
     
   <url>
-    <loc>https://hellokugo.github.io/2016/09/03/Hexo%E6%90%AD%E5%BB%BA%E4%BC%98%E5%8C%96%E9%83%A8%E7%BD%B2/</loc>
-    <lastmod>2016-09-10T04:52:16.667Z</lastmod>
+    <loc>https://hellokugo.github.io/2018/01/28/Hexo%E6%90%AD%E5%BB%BA%E4%BC%98%E5%8C%96%E9%83%A8%E7%BD%B2/</loc>
+    <lastmod>2018-01-28T15:39:34.390Z</lastmod>
     <data>
         <display>
         <title>Hexo搭建优化部署</title>
-        <pubTime>2016-09-03T14:56:45.289Z</pubTime>
+        <pubTime>2018-01-28T15:39:34.390Z</pubTime>
         
         <tag>other</tag>
          
@@ -163,22 +165,20 @@
     </url>
 
     
-    
-    
   <url>
-    <loc>https://hellokugo.github.io/2016/09/03/%E7%AE%80%E6%9E%90DroidPlugin%E4%B9%8BHook/</loc>
-    <lastmod>2016-06-14T10:04:50.379Z</lastmod>
+    <loc>https://hellokugo.github.io/2018/01/28/MQTT%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bconnect/</loc>
+    <lastmod>2018-01-28T15:39:34.390Z</lastmod>
     <data>
         <display>
-        <title>简析DroidPlugin之Hook</title>
-        <pubTime>2016-09-03T13:58:46.743Z</pubTime>
+        <title>MQTT源码解析之connect</title>
+        <pubTime>2018-01-28T15:39:34.390Z</pubTime>
         
-        <tag>android</tag>
+        <tag>Android，MQTT</tag>
          
          
            
              
-              <breadCrumb title="Mobile" url="https://hellokugo.github.io/categories/Mobile/"/>
+              <breadCrumb title="Android" url="https://hellokugo.github.io/categories/Android/"/>
           
         </display>
     </data>
@@ -186,19 +186,59 @@
 
     
   <url>
-    <loc>https://hellokugo.github.io/2016/09/03/%E7%AE%80%E6%9E%90Android%E7%BB%84%E4%BB%B6%E5%AE%89%E5%85%A8/</loc>
-    <lastmod>2016-06-14T10:04:45.716Z</lastmod>
+    <loc>https://hellokugo.github.io/2018/01/28/Android%E5%A4%9A%E6%B8%A0%E9%81%93%E5%8C%85%E5%A4%84%E7%90%86/</loc>
+    <lastmod>2018-01-28T15:39:34.390Z</lastmod>
     <data>
         <display>
-        <title>简析Android组件安全</title>
-        <pubTime>2016-09-03T13:58:46.740Z</pubTime>
+        <title>Android多渠道包处理</title>
+        <pubTime>2018-01-28T15:39:34.390Z</pubTime>
         
-        <tag>android</tag>
+        <tag>Android，，多渠道，pyqt</tag>
          
          
            
              
-              <breadCrumb title="Mobile" url="https://hellokugo.github.io/categories/Mobile/"/>
+              <breadCrumb title="Android" url="https://hellokugo.github.io/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://hellokugo.github.io/2018/01/28/Android%E5%86%97%E4%BD%99or%E9%87%8D%E5%A4%8D%E8%B5%84%E6%BA%90%E5%A4%84%E7%90%86/</loc>
+    <lastmod>2018-01-28T15:39:34.389Z</lastmod>
+    <data>
+        <display>
+        <title>Android冗余or重复资源处理</title>
+        <pubTime>2018-01-28T15:39:34.389Z</pubTime>
+        
+        <tag>Android，AndResguard</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="https://hellokugo.github.io/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://hellokugo.github.io/2018/01/28/65536%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90%E5%A4%9Adex%E5%A4%84%E7%90%86/</loc>
+    <lastmod>2018-01-28T15:39:34.389Z</lastmod>
+    <data>
+        <display>
+        <title>65536问题生成多dex处理</title>
+        <pubTime>2018-01-28T15:39:34.389Z</pubTime>
+        
+        <tag>Android，多dex，65536</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="https://hellokugo.github.io/categories/Android/"/>
           
         </display>
     </data>
